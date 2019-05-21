@@ -1,4 +1,4 @@
-FROM golang:1.10.0-alpine
+FROM golang AS builder
 RUN apk add --no-cache git
 ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
@@ -51,7 +51,8 @@ RUN \
 
 # copy local files
 COPY root/ /
-COPY --from=0 /go/bin/gcsfuse /usr/local/bin
+COPY --from=builder /go/bin/gcsfuse /usr/local/bin
+WORKDIR /
 
 # ports and volumes
 EXPOSE 9091 51413
