@@ -28,7 +28,6 @@ if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
 	chown abc:abc \
 		/config/gcsfuse-key.json
 		/config/bucket
-		/downloads
 	
 	# run gcsfuse
 	s6-setuidgid abc gcsfuse \
