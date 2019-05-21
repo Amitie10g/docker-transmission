@@ -2,45 +2,45 @@
 
 # make folders
 mkdir -p \
-	/downloads /config /watch
+  /downloads /config /watch
 
 # copy config
 [[ ! -f /config/settings.json ]] && cp \
-	/defaults/settings.json /config/settings.json
+  /defaults/settings.json /config/settings.json
 
 # copy blocklist-update script
 [[ ! -f /config/blocklist-update.sh ]] && cp \
-	/defaults/blocklist-update.sh /config/blocklist-update.sh
+  /defaults/blocklist-update.sh /config/blocklist-update.sh
 
 # permissions
 chown abc:abc \
-	/config/settings.json \
-	/config/blocklist-update.sh \
-	/downloads \
-	/watch
+  /config/settings.json \
+  /config/blocklist-update.sh \
+  /downloads \
+  /watch
 
 chmod 755 /config/blocklist-update.sh
 
 # mount /download to GCS bucket, if key files exists
 if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
 
-	# permissions
-	chown abc:abc \
-		/config/gcsfuse-key.json
-		/config/bucket
-	
-	# run gcsfuse
-	s6-setuidgid abc gcsfuse \
-		--key-file /config/gcsfuse-key.json \
-		"$(cat /config/bucket)" \
-		/donwloads
+  # permissions
+  chown abc:abc \
+    /config/gcsfuse-key.json
+    /config/bucket
+  
+  # run gcsfuse
+  s6-setuidgid abc gcsfuse \
+    --key-file /config/gcsfuse-key.json \
+    "$(cat /config/bucket)" \
+    /donwloads
 fi
 
 # make folders
 mkdir -p \
-	/downloads/{complete,incomplete}
+  /downloads/{complete,incomplete}
 
 # permissions
 chown abc:abc \
-	/downloads/complete \
-	/downloads/incomplete
+  /downloads/complete \
+  /downloads/incomplete
