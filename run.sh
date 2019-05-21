@@ -4,8 +4,8 @@
 PUID=<user id>
 PGID=<group id>
 TZ=UTC
-CONF_PATH=/home/davidkingnt_gmail_com/config
-WATCH_PATH=/home/davidkingnt_gmail_com/config
+CONF_PATH=<config path>
+WATCH_PATH=<watch path>
 NAME=transmission
 IMAGE=amitie10g/docker-transmission
 
