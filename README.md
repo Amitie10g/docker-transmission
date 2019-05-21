@@ -34,16 +34,14 @@ docker build \
   --compress \
   -t amitie10g/transmission:latest .
 ```
-## Running (docker-composte style)
+## Running
 
-* Copy ``docker-compose.yml.orig`` to ``docker-compose.yml.orig`` and edit it :
-  * Replace ``<config path>`` with the local directories you want to expose
-  * Replace the UID and GID (run ``id -u $(whoami)`` and ``id -g $(whoami)`` to get them).
+### Before begin
+
+``<config path>`` and ``<watch path>`` refers to the local diredctory where you want to expose.
 
 * Create ``<config path>/config/gcsfuse-key.json`` with the [service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
 
 * Create ``<config path>/config/bucket`` with the GCS bucket name
 
-* run ``docker-compose up -d``
-
-The full instructions and stuff is available in the original [README.md](https://github.com/linuxserver/docker-transmission/blob/master/README.md) file.
+Follow the original [README.md](https://github.com/linuxserver/docker-transmission/blob/master/README.md) file for instructions for running.
