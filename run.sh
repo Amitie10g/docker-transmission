@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Envirnment variables (set manually if necessary)
-PUID=$(id -u)
-PGID=$(id -g)
-TZ=$(date +%Z)
-CONF_PATH=./config
-WATCH_PATH=./watch
+PUID=<user id>
+PGID=<group id>
+TZ=UTC
+CONF_PATH=/home/davidkingnt_gmail_com/config
+WATCH_PATH=/home/davidkingnt_gmail_com/config
 NAME=transmission
 IMAGE=amitie10g/docker-transmission
 
@@ -21,7 +21,7 @@ case $1 in
 		;;
 
 	pull)
-		docker pull $IMAGE
+		docker image pull $IMAGE
 		;;
 	
 	stop)
@@ -42,20 +42,19 @@ case $1 in
 		;;
 
 	*)
-		docker create \
+		docker run -t -i -d \
 		  --name=$NAME \
 		  -e PUID=$PUID \
 		  -e PGID=$PGID \
-		  -e TZ=UTC \
+		  -e TZ=$TZ \
 		  -e TRANSMISSION_WEB_HOME=/combustion-release/ \
 		  -p 9091:9091 \
 		  -p 51413:51413 \
 		  -p 51413:51413/udp \
 		  -v $CONF_PATH:/config \
 		  -v $WATCH_PATH:/watch \
+		  --device=/dev/fuse \
 		  --restart unless-stopped \
 		  $IMAGE
-		  
-		docker start transmission
 		;;
 esac
