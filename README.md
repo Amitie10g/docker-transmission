@@ -44,4 +44,6 @@ docker build \
 
 * Create ``<config path>/config/bucket`` with the GCS bucket name
 
+* ``run.sh`` is a simple snippet to manage the container
+
 Follow the original [README.md](https://github.com/linuxserver/docker-transmission/blob/master/README.md) file for instructions for running.
