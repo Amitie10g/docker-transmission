@@ -1,60 +1,46 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
-# Envirnment variables (set manually if necessary)
-PUID=578505547
-PGID=578505547
-TZ=UTC
-CONF_PATH=/home/davidkingnt_gmail_com/config
-WATCH_PATH=/home/davidkingnt_gmail_com/config
-NAME=transmission
-IMAGE=amitie10g/docker-transmission
+# make folders
+mkdir -p \
+	/downloads /config /watch
 
-case $1 in
-  build)
-    git clone --branch gcsfuse https://github.com/Amitie10g/docker-transmission.git
-    cd docker-transmission
-    docker build \
-      --no-cache \
-      --pull \
-      --compress \
-      -t $IMAGE:latest .
-    ;;
+# copy config
+[[ ! -f /config/settings.json ]] && cp \
+	/defaults/settings.json /config/settings.json
 
-  pull)
-    docker image pull $IMAGE
-    ;;
-  
-  stop)
-    docker stop $NAME
-    docker rm $NAME
-    ;;
-    
-  rm|delete)
-    docker image rm $IMAGE
-    ;;
-    
-  shell)
-    docker exec -i -t $NAME /bin/bash
-    ;;
-    
-  log|logs)
-    docker logs --details $NAME
-    ;;
+# copy blocklist-update script
+[[ ! -f /config/blocklist-update.sh ]] && cp \
+	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
-  *)
-    docker run -t -i -d \
-      --name=$NAME \
-      -e PUID=$PUID \
-      -e PGID=$PGID \
-      -e TZ=$TZ \
-      -e TRANSMISSION_WEB_HOME=/combustion-release/ \
-      -p 9091:9091 \
-      -p 51413:51413 \
-      -p 51413:51413/udp \
-      -v $CONF_PATH:/config \
-      -v $WATCH_PATH:/watch \
-      --device=/dev/fuse \
-      --restart unless-stopped \
-      $IMAGE
-    ;;
-esac
+# permissions
+chown abc:abc \
+	/config/settings.json \
+	/config/blocklist-update.sh \
+	/downloads \
+	/watch
+
+chmod 755 /config/blocklist-update.sh
+
+# mount /download to GCS bucket, if key files exists
+if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
+
+	# set owner for config files
+	chown abc:abc \
+		/config/gcsfuse-key.json
+		/config/bucket
+	
+	# run gcsfuse
+	s6-setuidgid abc gcsfuse \
+		--key-file /config/gcsfuse-key.json \
+		"$(cat /config/bucket)" \
+		/donwloads
+fi
+
+# make folders
+mkdir -p \
+	/downloads/{complete,incomplete}
+
+# set permissions
+chown abc:abc \
+	/downloads/complete \
+	/downloads/incomplete
