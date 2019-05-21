@@ -44,3 +44,4 @@ Temporary Items
 
 # Local docker-compose.yml
 docker-compose.yml
+run.sh
