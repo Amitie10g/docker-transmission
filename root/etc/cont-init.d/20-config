@@ -1,24 +1,46 @@
 #!/usr/bin/with-contenv bash
 
-# make folders
+# make folders
 mkdir -p \
-	/downloads/{complete,incomplete} /watch
+	/downloads
 
-# copy config
+# copy config
 [[ ! -f /config/settings.json ]] && cp \
 	/defaults/settings.json /config/settings.json
 
-# copy blocklist-update script
+# copy blocklist-update script
 [[ ! -f /config/blocklist-update.sh ]] && cp \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
-# permissions
+# permissions
 chown abc:abc \
 	/config/settings.json \
 	/config/blocklist-update.sh \
 	/downloads \
-	/downloads/complete \
-	/downloads/incomplete \
 	/watch
 
 chmod 755 /config/blocklist-update.sh
+
+# mount /download to GCS bucket, if key files exists
+if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
+
+	# set owner for config files
+	chown abc:abc \
+		/config/gcsfuse-key.json
+		/config/bucket
+	
+	# run gcsfuse
+	s6-setuidgid abc gcsfuse \
+		--key-file /config/gcsfuse-key.json \
+		"$(cat /config/bucket)" \
+		/donwloads; then		
+fi
+
+# make folders
+mkdir -p \
+	/downloads/{complete,incomplete}
+
+# set permissions
+chown abc:abc \
+	/downloads/complete \
+	/downloads/incomplete
