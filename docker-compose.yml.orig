@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  transmission:
+    image: amitie10g/transmission
+    container_name: transmission
+    environment:
+      - PUID=<PUID>
+      - PGID=<PGID>
+      - TZ=Europe/London
+      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+    volumes:
+      - <path to data>:/config
+      - <path to watch folder>:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
