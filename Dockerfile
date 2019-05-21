@@ -49,6 +49,7 @@ RUN \
  rm -rf \
 	/tmp/*
 
+
 # copy local files
 COPY root/ /
 COPY --from=builder /go/bin/gcsfuse /usr/local/bin
