@@ -40,10 +40,14 @@ docker build \
 
 ``<config path>`` and ``<watch path>`` refers to the local diredctory where you want to expose.
 
-* Create ``<config path>/config/gcsfuse-key.json`` with the [service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+* Create ``<config path>/config/gcsfuse-key.json`` with the [service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 
-* Create ``<config path>/config/bucket`` with the GCS bucket name
+* Create ``<config path>/config/bucket`` with the GCS bucket name.
 
-* ``run.sh`` is a simple snippet to manage the container
+* Run ``id -u`` and ``id -g`` to get the user and group who owns the directories you want to expose.
+
+* ``run.sh`` is a simple snippet to manage the container. Edit as you need.
+
+* If you want to use the docker-compose way, copy ``docker-compose.yml.orig`` to ``docker-compose.yml`` and edit as you need.
 
 Follow the original [README.md](https://github.com/linuxserver/docker-transmission/blob/master/README.md) file for instructions for running.
