@@ -34,7 +34,7 @@ if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
 	s6-setuidgid abc gcsfuse \
 		--key-file /config/gcsfuse-key.json \
 		"$(cat /config/bucket)" \
-		/donwloads		
+		/donwloads
 fi
 
 # make folders
