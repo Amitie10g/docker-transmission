@@ -1,18 +1,18 @@
 #!/usr/bin/with-contenv bash
 
-#make folders
+# make folders
 mkdir -p \
 	/downloads /config /watch
 
-#copy config
+# copy config
 [[ ! -f /config/settings.json ]] && cp \
 	/defaults/settings.json /config/settings.json
 
-#copy blocklist-update script
+# copy blocklist-update script
 [[ ! -f /config/blocklist-update.sh ]] && cp \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
-#permissions
+# permissions
 chown abc:abc \
 	/config/settings.json \
 	/config/blocklist-update.sh \
