@@ -1,5 +1,4 @@
 FROM lsiobase/alpine:3.9
-
 # set version label
 ARG BUILD_DATE
 ARG VERSION
@@ -9,8 +8,10 @@ LABEL maintainer="sparklyballs"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
+	ca-certificates \
 	curl \
 	findutils \
+	fuse \
 	jq \
 	openssl \
 	p7zip \
@@ -42,10 +43,14 @@ RUN \
  rm -rf \
 	/tmp/*
 
-
 # copy local files
 COPY root/ /
 
-# ports and volumes
+FROM golang:1.10.0-alpine
+RUN apk add --no-cache git
+ENV GOPATH /go
+RUN go get -u github.com/googlecloudplatform/gcsfuse
+COPY /go/bin/gcsfuse /usr/local/bin
+
 EXPOSE 9091 51413
-VOLUME /config /downloads /watch
+VOLUME /config /watch
