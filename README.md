@@ -18,7 +18,7 @@ This branch is intended to add support for mounting [Google Cloud Storage](https
 ### Pre-requisites
 * git
 * docker.io
-* docker-compose
+* docker-compose (optional)
 
 ```
 apt-get install git docker.io docker-compose
