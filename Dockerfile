@@ -2,7 +2,6 @@ FROM golang:1.10.0-alpine
 RUN apk add --no-cache git
 ENV GOPATH /go
 RUN go get -u github.com/googlecloudplatform/gcsfuse
-COPY /go/bin/gcsfuse /usr/local/bin
 
 FROM lsiobase/alpine:3.9
 # set version label
@@ -51,6 +50,7 @@ RUN \
 
 # copy local files
 COPY root/ /
+COPY /go/bin/gcsfuse /usr/local/bin
 
 EXPOSE 9091 51413
 VOLUME /config /watch
