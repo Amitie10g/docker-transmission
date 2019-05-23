@@ -52,4 +52,10 @@ docker build \
 
 * If you want to use the docker-compose way, copy ``docker-compose.yml.orig`` to ``docker-compose.yml`` and edit as you need.
 
+### Command line
+``./run``
+
+### docker-compose style
+```docker-compose up -d```
+
 Follow the original [README.md](https://github.com/linuxserver/docker-transmission/blob/master/README.md) file for instructions for running.
