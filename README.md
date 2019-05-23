@@ -2,14 +2,16 @@
 
 This branch is intended to add support for mounting [Google Cloud Storage](https://cloud.google.com/storage) buckets via [gcsfuse](https://github.com/GoogleCloudPlatform/gcsfuse), using parts of the Dockerfile provided by [Ernest's docker-gcsfuse](https://github.com/chiaen/docker-gcsfuse).
 
+I've uploaded the image to Docker Hub.
+
 ## Caveats
 
-* ``gcsfuse`` is unable to mount. I'm researching why.  
+* ``gcsfuse`` refuses to mount with ``no such file or directory`` when providing a mount point. I opened a [thread at Server Fault](https://serverfault.com/questions/968292/no-such-file-or-directory-when-mounting-built-using-the-golangalpine-docker) while I'm still researching for a solution.
+* I got an Error 403 when accessing to the web interface from the host-side (http://127.0.0.1:9091). I found a workarround by using the IP range corresponding to the network used by Docker. This does not happen with the vanilla image.
 
 ## Differences between Master and gcsfuse branch
 
 * Dockerfile were modified to add instruccion to build gcsfuse
-* ``EXPOSE`` and ``VOLUME`` statements has been removed from Dockerfile in order to expose the port from ``docker-compose.yml``)
 * Config files were added to boot with GCS bucket mounted
 * ``/download`` volume is not longer exposed. Instead, it is mounted via FUSE inside the container
 
@@ -24,7 +26,7 @@ This branch is intended to add support for mounting [Google Cloud Storage](https
 apt-get install git docker.io docker-compose
 ```
 
-### Building from git repo
+### Build the image locally from repo (if you want to make changes)
 ```
 git clone --branch gcsfuse https://github.com/Amitie10g/docker-transmission.git
 cd docker-transmission
@@ -38,7 +40,7 @@ docker build \
 
 ### Before begin
 
-``<config path>`` and ``<watch path>`` refers to the local diredctory where you want to expose.
+``<config path>`` and ``<watch path>`` refers to the local direcctory where you want to expose.
 
 * Create ``<config path>/config/gcsfuse-key.json`` with the [service account key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys).
 
