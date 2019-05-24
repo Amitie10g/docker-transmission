@@ -11,35 +11,35 @@ LABEL maintainer="Amitie10g"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
-    ar \
-	curl \
-	findutils \
-	jq \
-	openssl \
-	p7zip \
-	python \
-	rsync \
-	tar \
-	transmission-cli \
-	transmission-daemon \
-	unrar \
-	unzip && \
+  ar \
+  curl \
+  findutils \
+  jq \
+  openssl \
+  p7zip \
+  python \
+  rsync \
+  tar \
+  transmission-cli \
+  transmission-daemon \
+  unrar \
+  unzip && \
  echo "**** install third party themes ****" && \
  curl -o \
-	/tmp/combustion.zip -L \
-	"https://github.com/Secretmapper/combustion/archive/release.zip" && \
+  /tmp/combustion.zip -L \
+  "https://github.com/Secretmapper/combustion/archive/release.zip" && \
  unzip \
-	/tmp/combustion.zip -d \
-	/ && \
+  /tmp/combustion.zip -d \
+  / && \
  mkdir -p /tmp/twctemp && \
  TWCVERSION=$(curl -sX GET "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
-	| awk '/tag_name/{print $4;exit}' FS='[""]') && \
+  | awk '/tag_name/{print $4;exit}' FS='[""]') && \
  curl -o \
-	/tmp/twc.tar.gz -L \
-	"https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz" && \
+  /tmp/twc.tar.gz -L \
+  "https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz" && \
  tar xf \
-	/tmp/twc.tar.gz -C \
-	/tmp/twctemp --strip-components=1 && \
+  /tmp/twc.tar.gz -C \
+  /tmp/twctemp --strip-components=1 && \
  mv /tmp/twctemp/src /transmission-web-control
 
 RUN echo "**** install gcsfuse ****"
