@@ -1,3 +1,9 @@
+FROM lsiobase/alpine:3.9 as builder
+RUN \
+ echo "**** install packages ****" && \
+ apk add --no-cache \
+  dpkg
+
 FROM lsiobase/alpine:3.9
 
 # set version label
@@ -11,9 +17,10 @@ LABEL maintainer="Amitie10g"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
-  ar \
+  ca-certificates \
   curl \
   findutils \
+  fuse \
   jq \
   openssl \
   p7zip \
@@ -58,6 +65,10 @@ RUN rm -rf /tmp/*
 
 # copy local files
 COPY root/ /
+COPY --from builder usr/bin/gcsfuse /usr/bin/gcsfuse
+COPY --from builder sbin/mount.gcsfuse /sbin/mount.gcsfuse
+COPY --from builder sbin/mount.fuse.gcsfuse /sbin/mount.fuse.gcsfuse
+
 WORKDIR /
 # ports and volumes
 EXPOSE 9091 51413
