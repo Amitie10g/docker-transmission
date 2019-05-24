@@ -7,7 +7,7 @@ TZ=UTC
 CONF_PATH=<configh path>
 WATCH_PATH=<watch path>
 NAME=transmission
-IMAGE=amitie10g/transmission
+IMAGE=amitie10g/docker-transmission
 
 case $1 in
   build)
