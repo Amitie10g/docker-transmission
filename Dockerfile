@@ -3,12 +3,13 @@ FROM lsiobase/alpine:3.9
 # set version label
 ARG BUILD_DATE
 ARG VERSION
+ARG GCSFUSE_VERSION=0.27.0
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs"
+LABEL maintainer="Amitie10g"
 
-RUN \
- echo "**** install packages ****" && \
- apk add --no-cache \
+# install packages
+RUN echo "**** install packages ****"
+RUN apk add --no-cache \
 	curl \
 	findutils \
 	jq \
@@ -20,32 +21,41 @@ RUN \
 	transmission-cli \
 	transmission-daemon \
 	unrar \
-	unzip && \
- echo "**** install third party themes ****" && \
- curl -o \
+	unzip
+RUN echo "**** install third party themes ****"
+RUN curl -o \
 	/tmp/combustion.zip -L \
-	"https://github.com/Secretmapper/combustion/archive/release.zip" && \
- unzip \
-	/tmp/combustion.zip -d \
-	/ && \
- mkdir -p /tmp/twctemp && \
- TWCVERSION=$(curl -sX GET "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
-	| awk '/tag_name/{print $4;exit}' FS='[""]') && \
- curl -o \
+	"https://github.com/Secretmapper/combustion/archive/release.zip"
+RUN unzip \
+	/tmp/combustion.zip -d /
+RUN mkdir -p /tmp/twctemp
+RUN TWCVERSION=$(curl -sX GET "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
+	| awk '/tag_name/{print $4;exit}' FS='[""]')
+RUN curl -o \
 	/tmp/twc.tar.gz -L \
-	"https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz" && \
- tar xf \
+	"https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz"
+RUN tar xf \
 	/tmp/twc.tar.gz -C \
-	/tmp/twctemp --strip-components=1 && \
- mv /tmp/twctemp/src /transmission-web-control && \
- echo "**** cleanup ****" && \
- rm -rf \
-	/tmp/*
+	/tmp/twctemp --strip-components=1
+RUN mv /tmp/twctemp/src /transmission-web-control
 
+RUN echo "**** install gcsfuse ****"
+RUN mkdir /tmp/gcsfuse
+RUN cd /tmp/gcsfuse
+RUN curl -o \
+        /tmp/gcsfuse/gcsfuse.deb -L \
+        "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v$GCSFUSE_VERSION/gcsfuse_$GCSFUSE_VERSION_amd64.deb"
+RUN ar x gcsfuse.deb
+RUN tar -zxvf data.tar.gz
+RUN mv /tmp/gcsfuse/sbin/mount.gcsfuse /tmp/gcsfuse/sbin/mount.fuse.gcsfuse /sbin/
+RUN mv /tmp/gcsfuse/usr/bin/gcsfuse /usr/bin/
+
+RUN echo "**** cleanup ****"
+RUN rm -rf /tmp/*
 
 # copy local files
 COPY root/ /
-
+WORKDIR /
 # ports and volumes
 EXPOSE 9091 51413
-VOLUME /config /downloads /watch
+VOLUME /config /watch
