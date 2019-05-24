@@ -23,20 +23,20 @@ case $1 in
   pull)
     docker image pull $IMAGE
     ;;
-  
+
   stop)
     docker stop $NAME
     docker rm $NAME
     ;;
-    
+
   rm|delete)
     docker image rm $IMAGE
     ;;
-    
+
   shell)
     docker exec -i -t $NAME /bin/bash
     ;;
-    
+
   log|logs)
     docker logs --details $NAME
     ;;
