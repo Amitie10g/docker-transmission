@@ -1,4 +1,5 @@
 FROM lsiobase/alpine:3.9
+
 # set version label
 ARG BUILD_DATE
 ARG VERSION
@@ -21,13 +22,12 @@ RUN  apk add --no-cache \
         transmission-daemon \
         unrar \
         unzip
-
 RUN echo "**** install third party themes ****"
 RUN curl -o \
         /tmp/combustion.zip -L \
         "https://github.com/Secretmapper/combustion/archive/release.zip"
 RUN unzip \
-        /tmp/combustion.zip -d
+        /tmp/combustion.zip -d /
 RUN mkdir -p /tmp/twctemp
 RUN TWCVERSION=$(curl -sX GET "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
         | awk '/tag_name/{print $4;exit}' FS='[""]')
