@@ -3,49 +3,49 @@ FROM lsiobase/alpine:3.9
 # set version label
 ARG BUILD_DATE
 ARG VERSION
+ARG GCSFUSE_VERSION=0.27.0
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs"
+LABEL maintainer="Amitie10g"
 
+# install packages
 RUN echo "**** install packages ****"
-RUN  apk add --no-cache \
-        ca-certificates \
-        curl \
-        findutils \
-        fuse \
-        jq \
-        openssl \
-        p7zip \
-        python \
-        rsync \
-        tar \
-        transmission-cli \
-        transmission-daemon \
-        unrar \
-        unzip
+RUN apk add --no-cache \
+	curl \
+	findutils \
+	jq \
+	openssl \
+	p7zip \
+	python \
+	rsync \
+	tar \
+	transmission-cli \
+	transmission-daemon \
+	unrar \
+	unzip
 RUN echo "**** install third party themes ****"
 RUN curl -o \
-        /tmp/combustion.zip -L \
-        "https://github.com/Secretmapper/combustion/archive/release.zip"
+	/tmp/combustion.zip -L \
+	"https://github.com/Secretmapper/combustion/archive/release.zip"
 RUN unzip \
-        /tmp/combustion.zip -d /
+	/tmp/combustion.zip -d /
 RUN mkdir -p /tmp/twctemp
 RUN TWCVERSION=$(curl -sX GET "https://api.github.com/repos/ronggang/transmission-web-control/releases/latest" \
-        | awk '/tag_name/{print $4;exit}' FS='[""]')
+	| awk '/tag_name/{print $4;exit}' FS='[""]')
 RUN curl -o \
-        /tmp/twc.tar.gz -L \
-        "https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz"
+	/tmp/twc.tar.gz -L \
+	"https://github.com/ronggang/transmission-web-control/archive/${TWCVERSION}.tar.gz"
 RUN tar xf \
-        /tmp/twc.tar.gz -C \
-        /tmp/twctemp --strip-components=1
+	/tmp/twc.tar.gz -C \
+	/tmp/twctemp --strip-components=1
 RUN mv /tmp/twctemp/src /transmission-web-control
 
 RUN echo "**** install gcsfuse ****"
 RUN mkdir /tmp/gcsfuse
 RUN cd /tmp/gcsfuse
 RUN curl -o \
-        /tmp/gcsfuse/gcsfuse_0.27.0_amd64.deb -L \
-        "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v0.27.0/gcsfuse_0.27.0_amd64.deb"
-RUN ar x gcsfuse_0.27.0_amd64.deb
+        /tmp/gcsfuse/gcsfuse.deb -L \
+        "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v$GCSFUSE_VERSION/gcsfuse_$GCSFUSE_VERSION_amd64.deb"
+RUN ar x gcsfuse.deb
 RUN tar -zxvf data.tar.gz
 RUN mv /tmp/gcsfuse/sbin/mount.gcsfuse /tmp/gcsfuse/sbin/mount.fuse.gcsfuse /sbin/
 RUN mv /tmp/gcsfuse/usr/bin/gcsfuse /usr/bin/
