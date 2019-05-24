@@ -11,6 +11,7 @@ LABEL maintainer="Amitie10g"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
+    ar \
 	curl \
 	findutils \
 	jq \
