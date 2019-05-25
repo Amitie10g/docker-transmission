@@ -21,7 +21,7 @@ RUN \
 #  p7zip \
 #  python \
 #  rsync \
-#  tar \
+  tar \
   transmission-cli \
   transmission-daemon \
 #  unrar \
@@ -47,7 +47,7 @@ RUN \
 # install gcsfuse
 RUN curl -o \
   /tmp/gcsfuse.deb -L \
-  "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v${GCSFUSE_VERSION}/gcsfuse_${GCSFUSE_VERSION}_amd64.deb"
+  "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v$GCSFUSE_VERSION/gcsfuse_$GCSFUSE_VERSION_amd64.deb"
 RUN touch /var/lib/dpkg/status
 RUN dpkg --force-all -i /tmp/gcsfuse.deb
 
