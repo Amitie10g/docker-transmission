@@ -37,8 +37,3 @@ fi
 # make folders
 s6-setuidgid abc mkdir -p \
   /downloads/{complete,incomplete}
-
-# permissions
-chown abc:abc \
-  /downloads/complete \
-  /downloads/incomplete
