@@ -3,14 +3,12 @@
 # Envirnment variables (set manually if necessary)
 PUID=$(id -u)
 PGID=$(id -g)
+BUCKET=<bucket>
 TZ=UTC
 CONF_PATH=<config path>
 WATCH_PATH=<watch path>
 NAME=transmission
 IMAGE=amitie10g/docker-transmission:latest
-
-# Container env variables
-ENV BUCKET=<GCS bucket>
 
 case $1 in
   build)
@@ -26,22 +24,22 @@ case $1 in
   pull)
     docker image pull $IMAGE
     ;;
-  
+
   stop)
     docker stop $NAME
     docker rm $NAME
     ;;
-    
+
   rm|delete)
     docker stop $NAME
     docker rm $NAME
     docker image rm $IMAGE
     ;;
-    
+
   shell)
     docker exec -i -t $NAME /bin/bash
     ;;
-    
+
   log|logs)
     docker logs --details $NAME
     ;;
@@ -52,6 +50,7 @@ case $1 in
       -e PUID=$PUID \
       -e PGID=$PGID \
       -e TZ=$TZ \
+      -e BUCKET=$BUCKET
       -e TRANSMISSION_WEB_HOME=/combustion-release/ \
       -p 9091:9091 \
       -p 51413:51413 \
@@ -60,6 +59,7 @@ case $1 in
       -v $WATCH_PATH:/watch \
       --device=/dev/fuse \
       --restart unless-stopped \
+	  --privilegied \
       $IMAGE
     ;;
 esac
