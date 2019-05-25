@@ -30,10 +30,8 @@ if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
     /config/bucket
   
   # run gcsfuse
-  s6-setuidgid abc gcsfuse \
-    --key-file /config/gcsfuse-key.json \
-    $BUCKET \
-    /donwloads
+  echo "torrent-test  /downloads  gcsfuse  rw,user,noauto,key_file=/config/gcsfuse-key.json" >> /etc/fstab
+  s6-setuidgid abc mount.gcsfuse $BUCKET /downloads \
 fi
 
 # make folders
