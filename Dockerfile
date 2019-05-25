@@ -15,7 +15,7 @@ RUN \
   curl \
   dpkg \
   findutils \
-  fuse3 \
+  fuse \
   fuse-common \
   jq \
   openssl \
@@ -52,7 +52,7 @@ RUN curl -o \
 RUN touch /var/lib/dpkg/status
 RUN dpkg --force-all -i /tmp/gcsfuse.deb
 RUN mkdir /lib64
-RUN ln -s  /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+RUN ln -s /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 # cleanup
 RUN echo "**** cleanup ****"
