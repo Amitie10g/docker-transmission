@@ -11,21 +11,22 @@ LABEL maintainer="Amitie10g"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
-  ca-certificates \
-  curl \
-  dpkg \
-  findutils \
-  fuse \
-  jq \
-  openssl \
-  p7zip \
-  python \
-  rsync \
-  tar \
-  transmission-cli \
-  transmission-daemon \
-  unrar \
-  unzip && \
+ ca-certificates \
+	curl \
+ dpkg \
+	findutils \
+ fuse3 \
+ fuse-common \
+	jq \
+	openssl \
+	p7zip \
+	python \
+	rsync \
+	tar \
+	transmission-cli \
+	transmission-daemon \
+	unrar \
+	unzip && \
  echo "**** install third party themes ****" && \
  curl -o \
   /tmp/combustion.zip -L \
