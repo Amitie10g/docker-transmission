@@ -11,15 +11,15 @@ LABEL maintainer="Amitie10g"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
-#  ca-certificates \
+  ca-certificates \
   curl \
   dpkg \
   findutils \
   fuse \
   jq \
   openssl \
-#  p7zip \
-#  python \
+  p7zip \
+  python \
 #  rsync \
   tar \
   transmission-cli \
@@ -47,7 +47,7 @@ RUN \
 # install gcsfuse
 RUN curl -o \
   /tmp/gcsfuse.deb -L \
-  "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v$GCSFUSE_VERSION/gcsfuse_$GCSFUSE_VERSION_amd64.deb"
+  "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v${GCSFUSE_VERSION}/gcsfuse_${GCSFUSE_VERSION}_amd64.deb"
 RUN touch /var/lib/dpkg/status
 RUN dpkg --force-all -i /tmp/gcsfuse.deb
 
