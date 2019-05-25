@@ -51,6 +51,8 @@ RUN curl -o \
   "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v${GCSFUSE_VERSION}/gcsfuse_${GCSFUSE_VERSION}_amd64.deb"
 RUN touch /var/lib/dpkg/status
 RUN dpkg --force-all -i /tmp/gcsfuse.deb
+RUN mkdir /lib64
+RUN ln -s  /lib/ld-musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
 # cleanup
 RUN echo "**** cleanup ****"
