@@ -4,10 +4,13 @@
 PUID=$(id -u)
 PGID=$(id -g)
 TZ=UTC
-CONF_PATH=<configh path>
+CONF_PATH=<config path>
 WATCH_PATH=<watch path>
 NAME=transmission
-IMAGE=amitie10g/docker-transmission
+IMAGE=amitie10g/docker-transmission:latest
+
+# Container env variables
+ENV BUCKET=<GCS bucket>
 
 case $1 in
   build)
@@ -17,26 +20,28 @@ case $1 in
       --no-cache \
       --pull \
       --compress \
-      -t $IMAGE:latest .
+      -t $IMAGE .
     ;;
 
   pull)
     docker image pull $IMAGE
     ;;
-
+  
   stop)
     docker stop $NAME
     docker rm $NAME
     ;;
-
+    
   rm|delete)
+    docker stop $NAME
+    docker rm $NAME
     docker image rm $IMAGE
     ;;
-
+    
   shell)
     docker exec -i -t $NAME /bin/bash
     ;;
-
+    
   log|logs)
     docker logs --details $NAME
     ;;
