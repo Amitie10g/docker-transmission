@@ -59,9 +59,6 @@ RUN rm -rf /tmp/*
 
 # copy local files
 COPY root/ /
-COPY --from=builder usr/bin/gcsfuse /usr/bin/gcsfuse
-COPY --from=builder sbin/mount.gcsfuse /sbin/mount.gcsfuse
-COPY --from=builder sbin/mount.fuse.gcsfuse /sbin/mount.fuse.gcsfuse
 
 WORKDIR /
 # ports and volumes
