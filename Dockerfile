@@ -54,7 +54,7 @@ RUN \
 
 # cleanup
 RUN echo "**** cleanup ****"
-RUN apk del --purge dpkg
+RUN apk del dpkg
 #RUN /var/lib/dpkg/status
 RUN rm -rf /tmp/*
 
