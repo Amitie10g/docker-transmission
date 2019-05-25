@@ -4,23 +4,21 @@ This branch is intended to add support for mounting [Google Cloud Storage](https
 
 I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/repository/docker/amitie10g/docker-transmission).
 
-## Caveats
-
-* I got an Error 403 when accessing to the web interface from the host-side (http://127.0.0.1:9091). I found a workarround by using the IP range corresponding to the network used by Docker. This does not happen with the vanilla image.
-
 ## Differences between Master and gcsfuse branch
 
 * ``/download`` volume is not longer exposed. Instead, it is mounted via FUSE **inside** the container
 * The following files were modified:
-** Dockerfile
-** root/etc/cont-init.d/20-config
+  * Dockerfile
+  * root/etc/cont-init.d/20-config
 
 ## Running
 
 ### Before begin
 * ``<config path>`` and ``<watch path>`` refers to the local direcctory where you want to expose.
 
-* Get your [Service Account Key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) for your bucket (don't forget to set the right permissions), and upload to <config path>/gcsfuse-key.json.
+* Get your [Service Account Key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) for your bucket, and upload to <config path>/gcsfuse-key.json.
+  
+* Don't forget to set the right permissions for your bucket.
 
 * Run ``id -u`` and ``id -g`` to get the user and group who owns the directories you want to expose.
 
