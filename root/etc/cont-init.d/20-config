@@ -32,7 +32,7 @@ if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
   # run gcsfuse
   s6-setuidgid abc gcsfuse \
     --key-file /config/gcsfuse-key.json \
-    "$(cat /config/bucket)" \
+    $BUCKET \
     /donwloads
 fi
 
