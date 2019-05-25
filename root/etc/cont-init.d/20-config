@@ -26,11 +26,11 @@ if [ -f "/config/gcsfuse-key.json" ] && [ -f "/config/bucket" ]; then
 
   # permissions
   chown abc:abc \
-    /config/gcsfuse-key.json
+    /config/gcsfuse-key.json \
     /config/bucket
   
   # run gcsfuse
-  echo "torrent-test  /downloads  gcsfuse  rw,user,noauto,key_file=/config/gcsfuse-key.json" >> /etc/fstab
+  echo "$BUCKET /downloads gcsfuse rw,user,noauto,key_file=/config/gcsfuse-key.json" >> /etc/fstab
   s6-setuidgid abc mount.gcsfuse $BUCKET /downloads \
 fi
 
