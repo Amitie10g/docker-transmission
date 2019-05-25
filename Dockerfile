@@ -1,9 +1,3 @@
-FROM lsiobase/alpine:3.9 as builder
-RUN \
- echo "**** install packages ****" && \
- apk add --no-cache \
-  dpkg
-
 FROM lsiobase/alpine:3.9
 
 # set version label
@@ -17,19 +11,20 @@ LABEL maintainer="Amitie10g"
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
-  ca-certificates \
+#  ca-certificates \
   curl \
+  dpkg \
   findutils \
   fuse \
   jq \
   openssl \
-  p7zip \
-  python \
-  rsync \
-  tar \
+#  p7zip \
+#  python \
+#  rsync \
+#  tar \
   transmission-cli \
   transmission-daemon \
-  unrar \
+#  unrar \
   unzip && \
  echo "**** install third party themes ****" && \
  curl -o \
@@ -48,19 +43,15 @@ RUN \
   /tmp/twc.tar.gz -C \
   /tmp/twctemp --strip-components=1 && \
  mv /tmp/twctemp/src /transmission-web-control
-
-RUN echo "**** install gcsfuse ****"
-RUN mkdir /tmp/gcsfuse
-RUN cd /tmp/gcsfuse
-RUN curl -o \
-        /tmp/gcsfuse/gcsfuse.deb -L \
-        "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v$GCSFUSE_VERSION/gcsfuse_$GCSFUSE_VERSION_amd64.deb"
-RUN ar -v x gcsfuse.deb
-RUN tar -zxvf data.tar.gz
-RUN mv /tmp/gcsfuse/sbin/mount.gcsfuse /tmp/gcsfuse/sbin/mount.fuse.gcsfuse /sbin/
-RUN mv /tmp/gcsfuse/usr/bin/gcsfuse /usr/bin/
+ 
+# install gcsfuse
+curl -o \
+  /tmp/gcsfuse.deb -L \
+  "https://github.com/GoogleCloudPlatform/gcsfuse/releases/download/v${GCSFUSE_VERSION}/gcsfuse_${GCSFUSE_VERSION}_amd64.deb"
+RUN dpkg --force-all -i /tmp/gcsfuse.deb
 
 RUN echo "**** cleanup ****"
+apk del --purge dpkg
 RUN rm -rf /tmp/*
 
 # copy local files
