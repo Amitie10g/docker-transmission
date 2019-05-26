@@ -11,10 +11,10 @@
 # rights to Docker helper.
 
 # 
-curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/scripts/docker-helper.sh --output /bin/docker-helper.sh
+curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/docker-helper.sh --output /bin/docker-helper.sh
 chmod 755 /bin/docker-helper.sh
 
-# Local Envirnment variables
+# Local Environment variables (set manually if necessary)
 PUID=<User ID>
 PGID=<Group ID>
 BUCKET=<Bucket>
@@ -26,6 +26,7 @@ CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 
 # Create the directories
 mkdir $CONF_PATH $WATCH_PATH
+chown $PUID:$PGID $CONF_PATH $WATCH_PATH
 
 # Save the variables to /etc/environment
 echo "PUID=\"$PUID\"" >> /etc/environment
