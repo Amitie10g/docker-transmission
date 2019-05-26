@@ -26,7 +26,7 @@ mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
 chown -R $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
 
 # Update docker-helper.sh
-curl https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh --output $BIN_PATH/docker-helper.sh
+curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh > $BIN_PATH/docker-helper.sh
 chmod 755 $BIN_PATH/docker-helper.sh
 
 # Save the variables to /etc/environment
