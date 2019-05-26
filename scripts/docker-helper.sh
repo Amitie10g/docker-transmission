@@ -106,6 +106,7 @@ case $1 in
 			--device=/dev/fuse \
 			--restart unless-stopped \
 			--privileged \
+			--ipv6
 			$CONTAINER_IMAGE
 	;;
 	*)
