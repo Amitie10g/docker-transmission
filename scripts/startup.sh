@@ -25,6 +25,10 @@ TZ="UTC"
 mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
 chown $PUID:$PGID $CONF_PATH $WATCH_PATH
 
+# Create the directories
+mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
+chown $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
+
 # Update docker-helper.sh
 curl https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh --output $BIN_PATH/docker-helper.sh
 chmod 755 $BIN_PATH/docker-helper.sh
@@ -47,7 +51,6 @@ if [ -f "CONF_PATH/gcs-key.json" ]; then
 	# Workarround for Container-optimized OS (comment above and uncomment bellow)
 	#bash $BIN_PATH/docker-helper.sh start
 else 
-	ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'.\n"
-	echo "$ERROR"
+	ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'."
 	echo "$ERROR" >&2
 fi
