@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-# Local Environment variables (set manually if necessary)
+# Local Environment variables
 PUID=<User ID>
 PGID=<Group ID>
 BUCKET=<Bucket>
@@ -34,12 +34,18 @@ echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\""
 echo "PATH=\"$PATH:$BIN_PATH/bin\""
 } >> /etc/environment
 
-# Download the key via gcloud, if available
+# Remove duplicated entries
+awk '!a[$0]++' /etc/environment > /tmp/environment
+mv /tmp/environment /etc/environment
+
+# Download the key via gcloud, if available and already logged in
 if ! [ -x "$(command -v gcloud)" ]; then
 	gcloud iam service-accounts keys create $CONF_PATH/gcs-key.json \
 	--iam-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
-fi
-# If you want to inplement via Container deployment feature at Google Cloud, ommit the following
+
+# If yor're using docker-composer or you want to implement via
+# Container deployment feature at Google Cloud, ommit the following
+
 # Start the container, if the Service account key is found
 if [ -f "$CONF_PATH/gcs-key.json" ]; then
 	docker-helper start
