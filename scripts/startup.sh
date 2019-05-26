@@ -23,10 +23,6 @@ TZ="UTC"
 
 # Create the directories
 mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
-chown $PUID:$PGID $CONF_PATH $WATCH_PATH
-
-# Create the directories
-mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
 chown $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
 
 # Update docker-helper.sh
@@ -46,7 +42,7 @@ echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\""
 echo "PATH=\"$PATH:$BIN_PATH/bin\""
 } >> /etc/environment
 
-if [ -f "CONF_PATH/gcs-key.json" ]; then
+if [ -f "$CONF_PATH/gcs-key.json" ]; then
 	docker-helper start
 	# Workarround for Container-optimized OS (comment above and uncomment bellow)
 	#bash $BIN_PATH/docker-helper.sh start
