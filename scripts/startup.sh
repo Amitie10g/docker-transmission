@@ -10,11 +10,11 @@
 # Docker helper has waived all copyright and related or neighboring
 # rights to Docker helper.
 
-# Update docker-helper.sh
-curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/scripts/docker-helper.sh --output /bin/docker-helper.sh
+# 
+curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/docker-helper.sh --output /bin/docker-helper.sh
 chmod 755 /bin/docker-helper.sh
 
-# Local Environment variables (edit as you need)
+# Local Environment variables (set manually if necessary)
 PUID=<User ID>
 PGID=<Group ID>
 BUCKET=<Bucket>
@@ -25,7 +25,8 @@ CONTAINER_NAME="transmission"
 CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 
 # Create the directories
-mkdir -p $CONF_PATH $WATCH_PATH
+mkdir $CONF_PATH $WATCH_PATH
+chown $PUID:$PGID $CONF_PATH $WATCH_PATH
 
 # Save the variables to /etc/environment
 echo "PUID=\"$PUID\"" >> /etc/environment
@@ -38,7 +39,7 @@ echo "CONTAINER_NAME=\"$CONTAINER_NAME\"" >> /etc/environment
 echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\"" >> /etc/environment
 
 if [ -f "CONF_PATH/gcs-key.json" ]; then
-  docker-helper start
+	docker-helper start
 else 
   ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'.\n"
   echo $ERROR
