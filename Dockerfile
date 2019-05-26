@@ -20,9 +20,13 @@ RUN \
         fuse \
         jq \
         openssl \
+        p7zip \
+        python \
+        rsync \
         tar \
         transmission-cli \
         transmission-daemon \
+        unrar \
         unzip && \
  echo "**** install third party themes ****" && \
  curl -o \
