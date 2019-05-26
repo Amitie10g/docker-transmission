@@ -14,9 +14,9 @@
 PUID=<User ID>
 PGID=<Group ID>
 BUCKET=<Bucket>
-CONF_PATH=<config path>
-WATCH_PATH=<watch path>
-BIN_PATH=<watch path>
+CONF_PATH=<path to data directory>
+WATCH_PATH=<path to watch directory>
+BIN_PATH=<path to personal executable directory>
 CONTAINER_NAME="transmission"
 CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 TZ="UTC"
