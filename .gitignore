@@ -43,5 +43,5 @@ Temporary Items
 .apdisk
 
 # Local docker-compose.yml
-docker-compose.yml
-run.sh
+scripts/docker-compose.yml
+script/startup.sh
