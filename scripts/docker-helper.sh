@@ -11,10 +11,11 @@
 # rights to Docker helper.
 
 # Set options
-while getopts c:w:n:i:s: option
+while getopts b:c:w:n:i:s: option
 do
 case "${option}"
 in
+b) BUCKET=${OPTARG};;
 c) CONF_PATH=${OPTARG};;
 w) WATCH_PATH=${OPTARG};;
 n) CONTAINER_NAME=${OPTARG};;
@@ -24,6 +25,12 @@ esac
 done
 
 # Set default values for variables
+if [ -z "$BUCKET" ]
+then
+	echo "You must provide a valid Bucket name."
+	exit
+fi
+
 if [ -z "$CONF_PATH" ]
 then
 	CONF_PATH="$HOME/config"
