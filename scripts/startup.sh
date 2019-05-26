@@ -25,7 +25,7 @@ CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 TZ="UTC"
 
 # Create the directories
-mkdir $CONF_PATH $WATCH_PATH
+mkdir -p $CONF_PATH $WATCH_PATH
 chown $PUID:$PGID $CONF_PATH $WATCH_PATH
 
 # Save the variables to /etc/environment
