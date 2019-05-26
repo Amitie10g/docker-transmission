@@ -38,26 +38,6 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 ### docker-compose style
 ```docker-compose up -d```
 
-### From Google Cloud (experimental)
-You may enable the "Implement as container" feature. In order to do this flawlesly:
-* Select "Container-optimized OS" boot disk
-* (Enable ``os-login``)[https://cloud.google.com/compute/docs/instances/managing-instance-access#enable_oslogin] for your instance
-* Get your User ID and Group from another VM with ``os-login`` enabled by running ``$ id``.
-* Mark "Deploy a container image to this VM instance.", and,
-  * Fill "Container image" with ``amitie10g/docker-transmission:latest``
-  * Mark "Allocate a buffer for STDIN" and "Allocate a pseudo-TTY" if you want.
-  * Fill the following Environment variables:
-    * ``PUID`` with your Linux User ID
-    * ``PGID`` with your Linux User Group
-    * ``BUCKET`` with the GCS bucket name
-    * ``TZ`` with your time zone (usually ``UTC``)
-    
-  * At "Activación de volúmenes", add the following volumes (your local directory must reside inside your home directory):
-    * ``/config``
-    * ``/watch``
-* Once your VM is started, upload your Service account key to $HOME/config/gcs-key.json
-* Restart the container
-
 ## Building locally
 
 ```
