@@ -23,7 +23,7 @@ TZ="UTC"
 
 # Create the directories
 mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
-chown $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
+chown -R $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
 
 # Update docker-helper.sh
 curl https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh --output $BIN_PATH/docker-helper.sh
