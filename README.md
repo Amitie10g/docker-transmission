@@ -22,7 +22,7 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
 * Run ``id -u`` and ``id -g`` to get the user and group who owns the directories you want to expose.
 
-* ``scripts\docker-helper.sh`` is a script aimed to ease the container managenet.
+* ``scripts/docker-helper.sh`` is a script aimed to ease the container managenet.
 
 * ``scripts/startup.sh`` is a script intended to run at bootup (you may upload to the VM, or provide it externally). This will update ``docker-helper.sh`` and set the proper envirnment variables. Edit as you need.
 
