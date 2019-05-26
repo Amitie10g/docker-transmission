@@ -14,7 +14,7 @@
 curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/scripts/docker-helper.sh --output /bin/docker-helper.sh
 chmod 755 /bin/docker-helper.sh
 
-# Local Envirnment variables (edit as you need)
+# Local Environment variables (edit as you need)
 PUID=<User ID>
 PGID=<Group ID>
 BUCKET=<Bucket>
