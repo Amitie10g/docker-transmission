@@ -47,7 +47,7 @@ if [ -f "CONF_PATH/gcs-key.json" ]; then
 	# Workarround for Container-optimized OS (comment above and uncomment bellow)
 	#bash $BIN_PATH/docker-helper.sh start
 else 
-  ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'.\n"
-  echo "$ERROR"
-  echo "$ERROR" >&2
+	ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'.\n"
+	echo "$ERROR"
+	echo "$ERROR" >&2
 fi
