@@ -11,7 +11,7 @@
 # rights to Docker helper.
 
 # 
-curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/docker-helper.sh --output /bin/docker-helper.sh
+curl https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/scripts/docker-helper.sh --output /bin/docker-helper.sh
 chmod 755 /bin/docker-helper.sh
 
 # Local Envirnment variables (set manually if necessary)
