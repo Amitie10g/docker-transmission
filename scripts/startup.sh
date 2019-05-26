@@ -17,7 +17,7 @@ CONF_PATH=<path to data directory>
 WATCH_PATH=<path to watch directory>
 BIN_PATH=<path to personal executable directory>
 CONTAINER_NAME="transmission"
-CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
+CONTAINER_IMAGE="linuxserver/docker-transmission:latest"
 TZ="UTC"
 
 # Create the directories
