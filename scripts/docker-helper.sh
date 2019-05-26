@@ -1,36 +1,6 @@
 #!/bin/bash -e
 
-# Docker helper - a simple shell script for managing a single docker image.
-#
-# Author: Davod
-#
-# Released to the Public domain (CC0)
-#
-# To the extent possible under law, the person who associated CC0 with
-# Docker helper has waived all copyright and related or neighboring
-# rights to Docker helper.
-
-# Set options
-while getopts b:c:w:n:i:s: option
-do
-case "${option}"
-in
-b) BUCKET=${OPTARG};;
-c) CONF_PATH=${OPTARG};;
-w) WATCH_PATH=${OPTARG};;
-n) CONTAINER_NAME=${OPTARG};;
-i) CONTAINER_IMAGE=${OPTARG};;
-s) CONTAINER_SHELL=${OPTARG};;
-esac
-done
-
 # Set default values for variables
-if [ -z "$BUCKET" ]
-then
-	echo "You must provide a valid Bucket name."
-	exit
-fi
-
 if [ -z "$CONF_PATH" ]
 then
 	CONF_PATH="$HOME/config"
@@ -48,7 +18,7 @@ fi
 
 if [ -z "$CONTAINER_IMAGE" ]
 then
-	CONTAINER_IMAGE="Amitie10g/docker-transmission:latest"
+	CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 fi
 
 if [ -z "$TZ" ]
