@@ -56,7 +56,7 @@ fi
 
 case $1 in
 	build)
-		if [ -d "docker-transmission" ]; then
+		if [ ! -d "docker-transmission" ]; then
 			git clone --branch gcsfuse https://github.com/Amitie10g/docker-transmission.git
 		fi
 		cd docker-transmission
@@ -79,7 +79,7 @@ case $1 in
 	rm|delete)
 		docker stop $CONTAINER_NAME
 		docker rm $CONTAINER_NAME
-		docker image rm $IMAGE
+		docker image rm $CONTAINER_IMAGE
     ;;
     
 	shell)
