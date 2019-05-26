@@ -42,6 +42,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Local docker-compose.yml
-scripts/docker-compose.yml
-script/startup.sh
+# Local scripts
+#scripts/docker-compose.yml
+#script/startup.sh
