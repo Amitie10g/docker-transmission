@@ -1,22 +1,14 @@
 #!/bin/bash -e
 
-# Startup script for updating docker-helper and set envirnment variables
-#
-# Author: Davod
-#
-# Released to the Public domain (CC0)
-#
-# To the extent possible under law, the person who associated CC0 with
-# Docker helper has waived all copyright and related or neighboring
-# rights to Docker helper.
-
 # Local Environment variables (set manually if necessary)
 PUID=<User ID>
 PGID=<Group ID>
 BUCKET=<Bucket>
-CONF_PATH=<path to data directory>
-WATCH_PATH=<path to watch directory>
-BIN_PATH=<path to personal executable directory>
+CONF_PATH=<config path>
+WATCH_PATH=<watch path>
+BIN_PATH=<watch path>
+SERVICE_ACCOUNT=<service account name>
+PROJECT_ID=<project ID>
 CONTAINER_NAME="transmission"
 CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 TZ="UTC"
@@ -42,6 +34,13 @@ echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\""
 echo "PATH=\"$PATH:$BIN_PATH/bin\""
 } >> /etc/environment
 
+# Download the key via gcloud, if available
+if ! [ -x "$(command -v gcloud)" ]; then
+	gcloud iam service-accounts keys create $CONF_PATH/gcs-key.json \
+	--iam-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+fi
+# If you want to inplement via Container deployment feature at Google Cloud, ommit the following
+# Start the container, if the Service account key is found
 if [ -f "$CONF_PATH/gcs-key.json" ]; then
 	docker-helper start
 	# Workarround for Container-optimized OS (comment above and uncomment bellow)
