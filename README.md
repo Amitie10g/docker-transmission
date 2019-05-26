@@ -22,16 +22,18 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
 * Run ``id -u`` and ``id -g`` to get the user and group who owns the directories you want to expose.
 
-* ``run.sh`` is a simple snippet to manage the container. Edit as you need.
+* ``scripts\docker-helper.sh`` is a script aimed to ease the container managenet.
 
-* If you want to use the **docker-compose** way, copy ``docker-compose.yml.orig`` to ``docker-compose.yml`` and edit as you need.
+* ``scripts/startup.sh`` is a script intended to run at bootup (you may upload to the VM, or provide it externally). This will update ``docker-helper.sh`` and set the proper envirnment variables. Edit as you need.
+
+* If you want to use the **docker-compose** way, edit ``scripts/docker-compose.yml`` as you need.
 
 ### Command line
-* ``./run`` starts the container
-* ``./run shell `` give access to the container shell
-* ``./run stop`` stops the container
-* ``./run rm`` stops the container and remove the image
-* ``./run log`` shows the logs
+* ``docker-helper start`` starts the container
+* ``docker-helper  shell `` give access to the container shell
+* ``docker-helper  stop`` stops the container
+* ``docker-helper  rm`` stops the container and remove the image
+* ``docker-helper  log`` shows the logs
 
 ### docker-compose style
 ```docker-compose up -d```
