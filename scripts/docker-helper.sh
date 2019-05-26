@@ -105,6 +105,7 @@ case $1 in
 			-v $WATCH_PATH:/watch \
 			--device=/dev/fuse \
 			--restart unless-stopped \
+			--privileged \ # Needed for Linux pre-4.18
 			$CONTAINER_IMAGE
 	;;
 	*)
