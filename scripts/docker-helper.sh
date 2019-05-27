@@ -82,7 +82,7 @@ case $1 in
 			-v $WATCH_PATH:/watch \
 			--device=/dev/fuse \
 			--restart unless-stopped \
-			--privileged \
+			$PRIVILEGED \
 			--ipv6 \
 			$CONTAINER_IMAGE
 	;;
