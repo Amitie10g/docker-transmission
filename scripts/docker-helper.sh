@@ -1,55 +1,32 @@
-#!/bin/bash -e
-
-# Docker helper - a simple shell script for managing a single docker image.
-#
-# Author: Davod
-#
-# Released to the Public domain (CC0)
-#
-# To the extent possible under law, the person who associated CC0 with
-# Docker helper has waived all copyright and related or neighboring
-# rights to Docker helper.
-
-# Set options
-while getopts c:w:n:i:s: option
-do
-case "${option}"
-in
-c) CONF_PATH=${OPTARG};;
-w) WATCH_PATH=${OPTARG};;
-n) CONTAINER_NAME=${OPTARG};;
-i) CONTAINER_IMAGE=${OPTARG};;
-s) CONTAINER_SHELL=${OPTARG};;
-esac
-done
+#!/bin/bash
 
 # Set default values for variables
-if [ -z "$CONF_PATH" ]
+if [ ! -z "$CONF_PATH" ]
 then
 	CONF_PATH="$HOME/config"
 fi
 
-if [ -z "$WATCH_PATH" ]
+if [ ! -z "$WATCH_PATH" ]
 then
 	WATCH_PATH="$HOME/watch"
 fi
 
-if [ -z "$CONTAINER_NAME" ]
+if [ ! -z "$CONTAINER_NAME" ]
 then
 	CONTAINER_NAME="transmission"
 fi
 
-if [ -z "$CONTAINER_IMAGE" ]
+if [ ! -z "$CONTAINER_IMAGE" ]
 then
-	CONTAINER_IMAGE="linuxserver/docker-transmission:latest"
+	CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 fi
 
-if [ -z "$TZ" ]
+if [ ! -z "$TZ" ]
 then
       TZ="UTC"
 fi
 
-if [ -z "$CONTAINER_SHELL" ]
+if [ ! -z "$CONTAINER_SHELL" ]
 then
 	CONTAINER_SHELL="/bin/bash"
 fi
@@ -57,7 +34,7 @@ fi
 case $1 in
 	build)
 		if [ ! -d "docker-transmission" ]; then
-			git clone gcsfuse https://github.com/linuxserver/docker-transmission.git
+			git clone --branch gcsfuse https://github.com/Amitie10g/docker-transmission.git
 		fi
 		cd docker-transmission
 		docker build \
@@ -96,6 +73,7 @@ case $1 in
 			-e PUID=$PUID \
 			-e PGID=$PGID \
 			-e TZ=$TZ \
+			-e BUCKET=$BUCKET \
 			-e TRANSMISSION_WEB_HOME=/combustion-release/ \
 			-p 9091:9091 \
 			-p 51413:51413 \
@@ -104,8 +82,8 @@ case $1 in
 			-v $WATCH_PATH:/watch \
 			--device=/dev/fuse \
 			--restart unless-stopped \
-			--privileged \
 			--ipv6 \
+			$PRIVILEGED \
 			$CONTAINER_IMAGE
 	;;
 	*)
