@@ -55,7 +55,7 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 *** ``/watch`` with your watch directory.
 * At **Access scopes**, select "Allow full access to all Cloud APIs".
 * At **Automation** (click in "Management, security, disks, networking, sole tenancy" to deploy):
-** Fill the **Startup script** with the contents of ``startup.sh``, previously edited.
+** Fill the **Startup script** with the contents of ``scripts/startup-gcloud.sh``.
 ** Fill the following custom **Metadata**:
 *** ``enable-oslogin`` as ``true`` (either at the VM or globally).
 *** ``gcs-key`` with the Account service key.
