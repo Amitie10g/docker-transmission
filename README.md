@@ -42,7 +42,7 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 ### Using the Container deployment feature at Google Cloud
 
 * Select **Container-optimized OS** as boot image.
-* Mark **Deploy a container image to this VM instance.**, and,
+* Mark **Deploy a container image to this VM instance**, and,
   * Set ``amitie10g/docker-transmission`` as the container name (tags available are ``latest`` and ``minimal``.
   * Mark **Run as privileged** (until images with Linux 4.18 are available).
   * Fill the following envirnment variables:
