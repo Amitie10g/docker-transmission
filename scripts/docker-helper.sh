@@ -1,32 +1,32 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Set default values for variables
-if [ -z "$CONF_PATH" ]
+if [ ! -z "$CONF_PATH" ]
 then
 	CONF_PATH="$HOME/config"
 fi
 
-if [ -z "$WATCH_PATH" ]
+if [ ! -z "$WATCH_PATH" ]
 then
 	WATCH_PATH="$HOME/watch"
 fi
 
-if [ -z "$CONTAINER_NAME" ]
+if [ ! -z "$CONTAINER_NAME" ]
 then
 	CONTAINER_NAME="transmission"
 fi
 
-if [ -z "$CONTAINER_IMAGE" ]
+if [ ! -z "$CONTAINER_IMAGE" ]
 then
 	CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 fi
 
-if [ -z "$TZ" ]
+if [ ! -z "$TZ" ]
 then
       TZ="UTC"
 fi
 
-if [ -z "$CONTAINER_SHELL" ]
+if [ ! -z "$CONTAINER_SHELL" ]
 then
 	CONTAINER_SHELL="/bin/bash"
 fi
@@ -82,8 +82,8 @@ case $1 in
 			-v $WATCH_PATH:/watch \
 			--device=/dev/fuse \
 			--restart unless-stopped \
-			$PRIVILEGED \
 			--ipv6 \
+			$PRIVILEGED \
 			$CONTAINER_IMAGE
 	;;
 	*)
