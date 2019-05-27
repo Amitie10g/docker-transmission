@@ -20,7 +20,13 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
 * Get your [Service Account Key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) for your bucket, and upload to <config path>/gcsfuse-key.json. (if you're running the VM at Google Cloud, the key can be reteived as custom metadata).
  
-* If you're running the VM at Google Cloud with **oslogin** enabled, you may obtain your user and group id by running ``$ id`` inside another VM with ``oslogin`` enabled (associated to the same Service account).
+* If you're running the VM at Google Cloud,
+
+  * You must configure your [Service account](https://cloud.google.com/compute/docs/access/service-accounts) accordingly.
+
+  * You **should** enable [OS Login](https://cloud.google.com/compute/docs/instances/managing-instance-access#enable_oslogin) and choose the proper Service account.
+ 
+  * You may obtain your user and group id by running ``$ id`` inside another VM with OS Login enabled (associated to the same Service account).
   
 * Don't forget to set the right permissions for your bucket.
 
@@ -60,7 +66,7 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 * At **Automation** (click in "Management, security, disks, networking, sole tenancy" to deploy):
   * Fill the **Startup script** with the contents of ``scripts/startup-gcloud.sh``.
   * Fill the following custom **Metadata**:
-    * ``enable-oslogin`` as ``true`` (either at the VM or globally).
+    * ``enable-oslogin`` as ``true`` (you may also set OS Login globally).
     * ``gcs-key`` with the Account service key.
 
 ## Building locally
