@@ -11,32 +11,32 @@ while getopts "u:d:p:f:" opt; do
 done
 
 # Set default values for variables
-if [ ! -z "$CONF_PATH" ]
+if [ -z $CONF_PATH ]
 then
 	CONF_PATH="$HOME/config"
 fi
 
-if [ ! -z "$WATCH_PATH" ]
+if [ -z $WATCH_PATH ]
 then
 	WATCH_PATH="$HOME/watch"
 fi
 
-if [ ! -z "$CONTAINER_NAME" ]
+if [ -z $CONTAINER_NAME ]
 then
 	CONTAINER_NAME="transmission"
 fi
 
-if [ ! -z "$CONTAINER_IMAGE" ]
+if [ -z $CONTAINER_IMAGE ]
 then
 	CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 fi
 
-if [ ! -z "$TZ" ]
+if [ -z $TZ ]
 then
       TZ="UTC"
 fi
 
-if [ ! -z "$CONTAINER_SHELL" ]
+if [ -z $CONTAINER_SHELL ]
 then
 	CONTAINER_SHELL="/bin/bash"
 fi
@@ -55,25 +55,30 @@ case $1 in
 	;;
 
 	pull)
+		echo "Retriveing $CONTAINER_IMAGE..."
 		docker image pull $CONTAINER_IMAGE
     ;;
   
 	stop)
+		echo "Removing $CONTAINER_IMAGE..."
 		docker stop $CONTAINER_NAME
 		docker rm $CONTAINER_NAME
 	;;
     
 	rm|delete)
+		echo "Stoping $CONTAINER_NAME and removing $CONTAINER_IMAGE..."
 		docker stop $CONTAINER_NAME
 		docker rm $CONTAINER_NAME
 		docker image rm $CONTAINER_IMAGE
     ;;
     
 	shell)
+		echo "Opening shell for $CONTAINER_NAME..."
 		docker exec -i -t $CONTAINER_NAME $CONTAINER_SHELL
     ;;
     
 	log|logs)
+		echo "Showing logs for $CONTAINER_NAME..."
 		docker logs --details $CONTAINER_NAME
     ;;
 
