@@ -5,7 +5,6 @@ PUID=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pa
 PGID=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['gid'])")
 USER=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['username'])")
 LOCAL_HOME=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['homeDirectory'])")
-BUCKET=$(curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/BUCKET" -H "Metadata-Flavor: Google")
 
 CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
