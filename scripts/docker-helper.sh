@@ -1,5 +1,15 @@
 #!/bin/bash
 
+while getopts "u:d:p:f:" opt; do
+	case "${opt}"
+		in
+		c) CONF_PATH=${OPTARG};;
+		w) WATCH_PATH=${OPTARG};;
+		n) CONTAINER_NAME=${OPTARG};;
+		i) CONTAINER_IMAGE=${OPTARG};;
+	esac
+done
+
 # Set default values for variables
 if [ ! -z "$CONF_PATH" ]
 then
