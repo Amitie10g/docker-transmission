@@ -26,7 +26,7 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
   * You **should** enable [OS Login](https://cloud.google.com/compute/docs/instances/managing-instance-access#enable_oslogin) and choose the proper Service account.
  
-  * You may obtain your user and group id by running ``$ id`` inside another VM with OS Login enabled (associated to the same Service account).
+  * *User ID*, *Gruop ID*, *Username* and *Home* directory belongs to the **OS Login** account (that are the same for every instance under the same Service account). You may run ``$id`` and ``echo $HOME`` from another VM with OS Login enabled and under the same Service account.
   
 * Don't forget to set the right permissions for your bucket.
 
