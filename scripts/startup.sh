@@ -1,57 +1,31 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Local Environment variables
-PUID=<User ID>
-PGID=<Group ID>
-BUCKET=<Bucket>
-CONF_PATH=<config path>
-WATCH_PATH=<watch path>
-BIN_PATH=<watch path>
-SERVICE_ACCOUNT=<service account name>
-PROJECT_ID=<project ID>
-CONTAINER_NAME="transmission"
-CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
-TZ="UTC"
+PUID=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['uid'])")
+PGID=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['gid'])")
+USER=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['username'])")
+LOCAL_HOME=$(curl "http://metadata.google.internal/computeMetadata/v1/oslogin/users?pagesize=1" -H "Metadata-Flavor: Google" | python -c "import sys, json; print(json.load(sys.stdin)['loginProfiles'][0]['posixAccounts'][0]['homeDirectory'])")
+BUCKET=$(curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/BUCKET" -H "Metadata-Flavor: Google")
+
+CONF_PATH=$LOCAL_HOME/config
+WATCH_PATH=$LOCAL_HOME/watch
 
 # Create the directories
-mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
-chown -R $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
+mkdir -p $CONF_PATH $WATCH_PATH
+chown -R $PUID:$PGID $LOCAL_HOME
 
-# Update docker-helper.sh
-curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh > $BIN_PATH/docker-helper.sh
-chmod 755 $BIN_PATH/docker-helper.sh
+# Install or update docker-helper.sh (optional)
+curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh > $LOCAL_HOME/docker-helper.sh
+chmod 755 $LOCAL_HOME/docker-helper.sh
 
-# Save the variables to /etc/environment
-{
-echo "PUID=\"$PUID\""
-echo "PGID=\"$PGID\""
-echo "BUCKET=\"$BUCKET\""
-echo "TZ=\"$TZ\""
-echo "CONF_PATH=\"$CONF_PATH\""
-echo "WATCH_PATH=\"$WATCH_PATH\""
-echo "CONTAINER_NAME=\"$CONTAINER_NAME\""
-echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\""
-echo "PATH=\"$PATH:$BIN_PATH/bin\""
-} >> /etc/environment
+# Download the Account service key from the custom metadata
+curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/gcs-key" \
+-H "Metadata-Flavor: Google" -o $CONF_PATH/gcs-key.json
 
-# Remove duplicated entries
-awk '!a[$0]++' /etc/environment > /tmp/environment
-mv /tmp/environment /etc/environment
-
-# Download the key via gcloud, if available and already logged in
-if ! [ -x "$(command -v gcloud)" ]; then
-	gcloud iam service-accounts keys create $CONF_PATH/gcs-key.json \
-	--iam-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
-
-# If yor're using docker-composer or you want to implement via
-# Container deployment feature at Google Cloud, ommit the following
-
-# Start the container, if the Service account key is found
+# Check if the Service account key has been found
 if [ -f "$CONF_PATH/gcs-key.json" ]; then
-	docker-helper start
-	# Workarround for Container-optimized OS (comment above and uncomment bellow)
-	#bash $BIN_PATH/docker-helper.sh start
-else 
-	ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'."
+	chown -R $PUID:$PGID $CONF_PATH/gcs-key.json
+else
+	ERROR="Please set the custom metadata gcs-key or upload the key to the VM."
 	echo "$ERROR" >&2
 fi
