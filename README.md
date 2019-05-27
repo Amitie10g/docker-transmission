@@ -18,23 +18,26 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 ### Before begin
 * ``<config path>`` and ``<watch path>`` refers to the local direcctories you want to expose.
 
-* Get your [Service Account Key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) for your bucket, and upload to <config path>/gcsfuse-key.json. (if you're running the VM at Google Cloud, the key can be reteived as custom metadata)
+* Get your [Service Account Key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) for your bucket, and upload to <config path>/gcsfuse-key.json. (if you're running the VM at Google Cloud, the key can be reteived as custom metadata).
+ 
+* If you're running the VM at Google Cloud with **oslogin** enabled, you may obtain your user and group id by running ``$ id`` inside another VM with ``oslogin`` enabled (associated to the same Service account).
   
 * Don't forget to set the right permissions for your bucket.
 
-* Run ``id -u`` and ``id -g`` from any VM with ``enable-oslogin=true`` to get the user and group.
 * ``scripts/docker-helper.sh`` is a script aimed to ease the container managenet.
-
-* ``scripts/startup.sh`` is a script intended to run at bootup (you may upload to the VM, or provide it externally). This will update ``docker-helper.sh`` and the Account service key, and set the proper envirnment variables. Edit as you need.
 
 * If you want to use the **docker-compose** way, edit ``scripts/docker-compose.yml`` as you need.
 
+* ``scripts/startup.sh`` is a script intended to run at bootup (you may upload to the VM, or provide it externally). This will update ``docker-helper.sh`` and the Account service key, and will set the proper environment variables. Edit as you need.
+
+* ``scripts/startup-gcloud.sh`` is a ready-to-use startup script to be used for VMs running at Google Cloud.
+
 ### Command line
 * ``docker-helper start`` starts the container
-* ``docker-helper  shell `` give access to the container shell
-* ``docker-helper  stop`` stops the container
-* ``docker-helper  rm`` stops the container and remove the image
-* ``docker-helper  log`` shows the logs
+* ``docker-helper shell `` give access to the container shell
+* ``docker-helper stop`` stops the container
+* ``docker-helper rm`` stops the container and remove the image
+* ``docker-helper log`` shows the logs
 
 ### docker-compose style
 ```docker-compose up -d```
@@ -43,10 +46,10 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
 * Select **Container-optimized OS** as boot image.
 * Mark **Deploy a container image to this VM instance**, and,
-  * Set ``amitie10g/docker-transmission`` as the container name (tags available are ``latest`` and ``minimal``.
-  * Mark **Run as privileged** (until images with Linux 4.18 are available).
+  * Set ``amitie10g/docker-transmission`` as the container name (tags available are ``latest`` and ``minimal``).
+  * Mark **Run as privileged** (needed for Linux prior to 4.18).
   * Fill the following envirnment variables:
-    * ``PUID`` with your user ID
+    * ``PUID`` with your user ID (see above)
     * ``PGID`` with your group ID
     * ``BUCKET`` with your bucket name
     * ``TZ`` with the local time zone (or just set UTC)
