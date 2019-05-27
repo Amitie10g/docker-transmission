@@ -43,22 +43,22 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
 * Select **Container-optimized OS** as boot image.
 * Mark **Deploy a container image to this VM instance.**, and,
-** Set ``amitie10g/docker-transmission`` as the container name (tags available are ``latest`` and ``minimal``.
-** Mark **Run as privileged** (until images with Linux 4.18 are available).
-** Fill the following envirnment variables:
-*** ``PUID`` with your user ID
-*** ``PGID`` with your group ID
-*** ``BUCKET`` with your bucket name
-*** ``TZ`` with the local time zone (or just set UTC)
-** Add the following Volume mounts (as directory):
-*** ``/config/`` with your data directory.
-*** ``/watch`` with your watch directory.
+  * Set ``amitie10g/docker-transmission`` as the container name (tags available are ``latest`` and ``minimal``.
+  * Mark **Run as privileged** (until images with Linux 4.18 are available).
+  * Fill the following envirnment variables:
+    * ``PUID`` with your user ID
+    * ``PGID`` with your group ID
+    * ``BUCKET`` with your bucket name
+    * ``TZ`` with the local time zone (or just set UTC)
+  * Add the following Volume mounts (as directory):
+    * ``/config/`` with your data directory.
+    * ``/watch`` with your watch directory.
 * At **Access scopes**, select "Allow full access to all Cloud APIs".
 * At **Automation** (click in "Management, security, disks, networking, sole tenancy" to deploy):
-** Fill the **Startup script** with the contents of ``scripts/startup-gcloud.sh``.
-** Fill the following custom **Metadata**:
-*** ``enable-oslogin`` as ``true`` (either at the VM or globally).
-*** ``gcs-key`` with the Account service key.
+  * Fill the **Startup script** with the contents of ``scripts/startup-gcloud.sh``.
+  * Fill the following custom **Metadata**:
+    * ``enable-oslogin`` as ``true`` (either at the VM or globally).
+    * ``gcs-key`` with the Account service key.
 
 ## Building locally
 
