@@ -1,15 +1,5 @@
 #!/bin/bash
 
-while getopts "u:d:p:f:" opt; do
-	case "${opt}"
-		in
-		c) CONF_PATH=${OPTARG};;
-		w) WATCH_PATH=${OPTARG};;
-		n) CONTAINER_NAME=${OPTARG};;
-		i) CONTAINER_IMAGE=${OPTARG};;
-	esac
-done
-
 # Set default values for variables
 if [ -z $CONF_PATH ]
 then
@@ -102,7 +92,8 @@ case $1 in
 			$CONTAINER_IMAGE
 	;;
 	*)
-	echo -e "\n\033[1mUsage:\033[0m
+	echo -e "\033[1mUsage:\033[0m docker-helper command
+\033[1mAlternate container:\033[0m env CONTAINER_NAME=<container name> docker-helper command
 \033[1mCommands:\033[0m
   \033[1mstart\033[0m	starts the container (pull the image from remote registry)
   \033[1mstop\033[0m	stops the container
@@ -111,12 +102,10 @@ case $1 in
   \033[1mpull\033[0m	pulls the image to the remote registry
   \033[1mbuild\033[0m	pulls the source code from repo
   
-\033[1mParameters:\033[0m
-Parameters can be provided via command line or envirnment variables.
-  \033[1mParam	Envirnment variable	Description			Default value\033[0m
-  \033[1m-c\033[0m	\$CONF_PATH		Configuration directory		\$HOME/config
-  \033[1m-w\033[0m	\$WATCH_PATH		The Configuration directory	\$HOME/watch
-  \033[1m-n\033[0m	\$CONTAINER_NAME		The Container name		transmission
-  \033[1m-i\033[0m	\$CONTAINER_IMAGE	The Container image		amitie10g/docker-transmission\n"
+\033[1mEnvirnment variables:\033[0m
+  \033[1m\$CONF_PATH\033[0m		Configuration directory		\$HOME/config
+  \033[1m\$WATCH_PATH\033[0m		The Configuration directory	\$HOME/watch
+  \033[1m\$CONTAINER_NAME\033[0m	The Container name		transmission
+  \033[1m\$CONTAINER_IMAGE\033[0m	The Container image		amitie10g/docker-transmission"
   ;;
 esac
