@@ -13,7 +13,7 @@ fi
 
 if [ -z $CONTAINER_NAME ]
 then
-	CONTAINER_NAME="transmission"
+    CONTAINER_NAME="transmission"
     #CONTAINER_NAME=$(docker -lq)
 fi
 
