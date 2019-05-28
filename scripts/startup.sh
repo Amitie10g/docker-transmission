@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 
 # Local Environment variables
 PUID=<User ID>
@@ -18,8 +18,8 @@ CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
 BIN_PATH=$LOCAL_HOME/bin
 
-# --privileged is needed for Linux prior to 4.18
-PRIVILEGED="--privileged"
+# Uncomment if you have Linux 4.18 or above, as --privileged is not longer needed
+#PRIVILEGED=false
 
 # Create the directories
 mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
@@ -45,11 +45,6 @@ echo "PATH=\"$PATH:$BIN_PATH/bin\""
 # Remove duplicated entries
 awk '!a[$0]++' /etc/environment > /tmp/environment
 mv /tmp/environment /etc/environment
-
-# When running on Google Cloud, uncomment in order download the key as Custom metadata
-#curl -f \
-#"http://metadata.google.internal/computeMetadata/v1/instance/attributes/gcs-key" \
-#-H "Metadata-Flavor: Google" > $CONF_PATH/gcs-key.json
 
 # Uncomment if you want to download the key via gcloud, if available and already logged in
 #if [ ! -x "$(command -v gcloud)" ]; then
