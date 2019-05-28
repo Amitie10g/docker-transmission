@@ -68,9 +68,9 @@ Google Cloud offers a feature to deploy containers in much style as docker-compo
 * At **Automation** (click in "Management, security, disks, networking, sole tenancy" to deploy):
   * Fill the **Startup script** with the contents of ``scripts/startup-gcloud.sh``.
   * Fill the following custom **Metadata**:
-    * ``enable-oslogin`` as ``true`` (you may also set OS Login globally). (mandatory)
-    * ``GCSKEY`` with the Account service key. (mandatory)
-    * ``SETTINGS`` with the contents from [root/defaults/settings.json](https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/root/defaults/settings.json) file, to ease changes.
+    * ``enable-oslogin`` as ``true`` (you may also set OS Login globally). (mandatory).
+    * ``GCSKEY`` with the Account service key. (mandatory).
+    * ``SETTINGS`` with the contents from [root/defaults/settings.json](https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/root/defaults/settings.json) file, to ease changes (you may want to set the ``rpc-user`` and ``rpc-password`` here). (optional).
 
 ## Building locally
 
