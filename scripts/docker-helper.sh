@@ -13,7 +13,8 @@ fi
 
 if [ -z $CONTAINER_NAME ]
 then
-    CONTAINER_NAME="transmission"
+	CONTAINER_NAME="transmission"
+    #CONTAINER_NAME=$(docker -lq)
 fi
 
 if [ -z $CONTAINER_IMAGE ]
@@ -31,9 +32,12 @@ then
     CONTAINER_SHELL="/bin/bash"
 fi
 
-if [ $PRIVILEGED != false ]
+# If $PRIVILEGED is set to false, change to null
+if [ "$PRIVILEGED" != false ]
 then
     PRIVILEGED="--privileged"
+else
+	PRIVILEGED=
 fi
 
 case $1 in
