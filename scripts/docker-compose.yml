@@ -1,11 +1,12 @@
 version: "3.3"
 services:
   transmission:
-    image: linuxserver/docker-transmission
+    image: amitie10g/docker-transmission
     container_name: transmission
     environment:
       - PUID=<PUID>
       - PGID=<PGID>
+      - BUCKET=<BUCKET>
       - TZ=UTC
       - TRANSMISSION_WEB_HOME=/combustion-release/
     volumes:
