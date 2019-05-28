@@ -50,11 +50,13 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 
 ### Using the Container deployment feature at Google Cloud
 
+Google Cloud offers a feature to deploy containers in much style as docker-compose. Follow tho se steps:
+
 * Select **Container-optimized OS** as boot image.
 * Mark **Deploy a container image to this VM instance**, and,
   * Set ``amitie10g/docker-transmission`` as the container name (tags available are ``latest`` and ``minimal``).
   * Mark **Run as privileged** (needed for Linux prior to 4.18).
-  * Fill the following envirnment variables:
+  * Fill the following environment variables:
     * ``PUID`` with your user ID (see above)
     * ``PGID`` with your group ID
     * ``BUCKET`` with your bucket name
@@ -66,8 +68,9 @@ I've uploaded the image to [Docker Hub](https://cloud.docker.com/u/amitie10g/rep
 * At **Automation** (click in "Management, security, disks, networking, sole tenancy" to deploy):
   * Fill the **Startup script** with the contents of ``scripts/startup-gcloud.sh``.
   * Fill the following custom **Metadata**:
-    * ``enable-oslogin`` as ``true`` (you may also set OS Login globally).
-    * ``gcs-key`` with the Account service key.
+    * ``enable-oslogin`` as ``true`` (you may also set OS Login globally). (mandatory)
+    * ``GCSKEY`` with the Account service key. (mandatory)
+    * ``SETTINGS`` with the contents from [root/defaults/settings.json](https://github.com/Amitie10g/docker-transmission/blob/gcsfuse/root/defaults/settings.json) file, to ease changes.
 
 ## Building locally
 
