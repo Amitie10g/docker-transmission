@@ -1,37 +1,39 @@
-#!/bin/bash -e
+#!/bin/bash
 
-# Startup script for updating docker-helper and set envirnment variables
-#
-# Author: Davod
-#
-# Released to the Public domain (CC0)
-#
-# To the extent possible under law, the person who associated CC0 with
-# Docker helper has waived all copyright and related or neighboring
-# rights to Docker helper.
-
-# Local Environment variables (set manually if necessary)
+# Local Environment variables
 PUID=<User ID>
 PGID=<Group ID>
-CONF_PATH=<path to data directory>
-WATCH_PATH=<path to watch directory>
-BIN_PATH=<path to personal executable directory>
+BUCKET=<Bucket>
+CONF_PATH=<config path>
+WATCH_PATH=<watch path>
+BIN_PATH=<watch path>
+SERVICE_ACCOUNT=<service account name>
+PROJECT_ID=<project ID>
 CONTAINER_NAME="transmission"
-CONTAINER_IMAGE="linuxserver/docker-transmission:latest"
+CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 TZ="UTC"
+
+# Don't modify the following
+CONF_PATH=$LOCAL_HOME/config
+WATCH_PATH=$LOCAL_HOME/watch
+BIN_PATH=$LOCAL_HOME/bin
+
+# Uncomment if you have Linux 4.18 or above, as --privileged is not longer needed
+#PRIVILEGED=false
 
 # Create the directories
 mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
-chown -R $PUID:$PGID $CONF_PATH $WATCH_PATH $BIN_PATH
+chown -R $LOCAL_HOME
 
-# Update docker-helper.sh
-curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/Amitie10g/docker-transmission/master/scripts/docker-helper.sh > $BIN_PATH/docker-helper.sh
+# Install or update docker-helper.sh (optional)
+curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh > $BIN_PATH/docker-helper.sh
 chmod 755 $BIN_PATH/docker-helper.sh
 
 # Save the variables to /etc/environment
 {
 echo "PUID=\"$PUID\""
 echo "PGID=\"$PGID\""
+echo "BUCKET=\"$BUCKET\""
 echo "TZ=\"$TZ\""
 echo "CONF_PATH=\"$CONF_PATH\""
 echo "WATCH_PATH=\"$WATCH_PATH\""
@@ -40,11 +42,24 @@ echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\""
 echo "PATH=\"$PATH:$BIN_PATH/bin\""
 } >> /etc/environment
 
+# Remove duplicated entries
+awk '!a[$0]++' /etc/environment > /tmp/environment
+mv /tmp/environment /etc/environment
+
+# Uncomment if you want to download the key via gcloud, if available and already logged in
+#if [ ! -x "$(command -v gcloud)" ]; then
+#	gcloud iam service-accounts keys create $CONF_PATH/gcs-key.json \
+#	--iam-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+#fi
+
 if [ -f "$CONF_PATH/gcs-key.json" ]; then
+	chown -R $PUID:$PGID $CONF_PATH/gcs-key.json
+	# Start the container using docker-helper. If you're using docker-compose or the
+	# Container deployment at Google Cloud, you may comment the following
 	docker-helper start
 	# Workarround for Container-optimized OS (comment above and uncomment bellow)
 	#bash $BIN_PATH/docker-helper.sh start
-else 
+else
 	ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'."
 	echo "$ERROR" >&2
 fi
