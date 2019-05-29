@@ -1,10 +1,12 @@
 #!/bin/bash
 
 # Local Environment variables
-PUID=<User ID>
-PGID=<Group ID>
-SERVICE_ACCOUNT=<service account name>
-PROJECT_ID=<project ID>
+PUID=
+PGID=
+MOUNT_OPTS=
+CLIENT_ID=
+CLIENT_SECRET=
+VERIFICATION_CODE=
 CONTAINER_NAME="transmission"
 CONTAINER_IMAGE="amitie10g/docker-transmission:gdrive-ocamlfuse"
 TZ="UTC"
@@ -29,7 +31,10 @@ chmod 755 $BIN_PATH/docker-helper.sh
 {
 echo "PUID=\"$PUID\""
 echo "PGID=\"$PGID\""
-echo "BUCKET=\"$BUCKET\""
+echo "MOUNT_OPTS=\"$MOUNT_OPTS\""
+echo "CLIENT_ID=\"$CLIENT_ID\""
+echo "CLIENT_SECRET=\"$CLIENT_SECRET\""
+echo "VERIFICATION_CODE=\"$VERIFICATION_CODE\""
 echo "TZ=\"$TZ\""
 echo "CONF_PATH=\"$CONF_PATH\""
 echo "WATCH_PATH=\"$WATCH_PATH\""
