@@ -87,13 +87,13 @@ case $1 in
             -e PUID=$PUID \
             -e PGID=$PGID \
             -e TZ=$TZ \
-            -e BUCKET=$BUCKET \
+            -e CLIENT_ID=$CLIENT_ID \
+	    -e CLIENT_SECRET=$CLIENT_SECRET \
+	    -e VERIFICATION_CODE=$VERIFICATION_CODE \
             -e TRANSMISSION_WEB_HOME=/combustion-release/ \
             -p 9091:9091 \
             -p 51413:51413 \
             -p 51413:51413/udp \
-            -v $CONF_PATH:/config \
-            -v $WATCH_PATH:/watch \
             --device=/dev/fuse \
             --restart unless-stopped \
             $PRIVILEGED \
