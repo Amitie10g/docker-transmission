@@ -18,7 +18,7 @@ setup(){
     -skiptrash \
     -headless \
     -id "$CLIENT_ID.apps.googleusercontent.com" \
-    -secret "$CLIENT_SECRET" \
+    -secret "$CLIENT_SECRET"
 
 }
 
@@ -30,7 +30,7 @@ mount() {
     -f \
     -cc \
     -skiptrash \
-    -headless \
+    -headless
 
 }
 
