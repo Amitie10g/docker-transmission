@@ -6,11 +6,10 @@ PGID=<Group ID>
 BUCKET=<Bucket>
 CONF_PATH=<config path>
 WATCH_PATH=<watch path>
-BIN_PATH=<watch path>
 SERVICE_ACCOUNT=<service account name>
 PROJECT_ID=<project ID>
 CONTAINER_NAME="transmission"
-CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
+CONTAINER_IMAGE="amitie10g/docker-transmission:gdrive-ocamlfuse"
 TZ="UTC"
 
 # Don't modify the following
