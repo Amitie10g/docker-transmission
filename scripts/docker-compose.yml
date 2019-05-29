@@ -6,6 +6,7 @@ services:
     environment:
       - PUID=
       - PGID=
+      - LOCAL_HOME=
       - MOUNT_OPTS=
       - CLIENT_ID=
       - CLIENT_SECRET=
