@@ -6,12 +6,6 @@ then
     CONF_PATH="$HOME/config"
 fi
 
-# Set default values for variables
-if [ -z $LOCAL_HOME ]
-then
-    LOCAL_HOME="/root"
-fi
-
 if [ -z $WATCH_PATH ]
 then
     WATCH_PATH="$HOME/watch"
