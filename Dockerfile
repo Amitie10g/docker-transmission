@@ -1,21 +1,35 @@
-FROM lsiobase/alpine:3.9
-
-# set version label
 ARG BUILD_DATE
 ARG VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="sparklyballs"
+ENV DRIVE_PATH="/drive"
+ENV LABEL="gdrive"
 
+# Builder
+FROM alpine:latest AS builder
+RUN apk -Uu add opam make build-base gcc abuild binutils ncurses-dev &&\
+  OPAMYES=true opam init && \
+  OPAMYES=true opam depext google-drive-ocamlfuse && \
+  OPAMYES=true opam install google-drive-ocamlfuse && \
+  mv /root/.opam/system/bin/google-drive-ocamlfuse /bin/google-drive-ocamlfuse
+
+# Base
+FROM lsiobase/alpine:3.9
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
 	curl \
 	findutils \
+	fuse \
 	jq \
+	libressl2.4-libtls \
+	libgmpxx \
+	ncurses-libs \
 	openssl \
 	p7zip \
 	python \
 	rsync \
+	sqlite-libs \
 	tar \
 	transmission-cli \
 	transmission-daemon \
@@ -42,10 +56,11 @@ RUN \
  rm -rf \
 	/tmp/*
 
-
 # copy local files
 COPY root/ /
+COPY --from=builder /bin/google-drive-ocamlfuse /usr/bin/google-drive-ocamlfuse
+COPY --from=builder /init.sh /usr/bin/gdrive-init.sh
 
 # ports and volumes
 EXPOSE 9091 51413
-VOLUME /config /downloads /watch
+VOLUME /config /watch
