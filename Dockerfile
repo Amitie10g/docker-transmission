@@ -16,7 +16,7 @@ RUN \
 	findutils \
 	fuse \
 	jq \
-	libressl2.4-libtls \
+	libressl2.7-libtls \
 	libgmpxx \
 	ncurses-libs \
 	openssl \
