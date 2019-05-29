@@ -6,9 +6,8 @@ ENV DRIVE_PATH="/drive"
 ENV LABEL="gdrive"
 
 # Builder
-FROM alpine:latest AS builder
-RUN apk -Uu add opam make build-base gcc abuild binutils ncurses-dev &&\
-  OPAMYES=true opam init && \
+FROM FROM ocaml/opam2:alpine AS builder
+RUN OPAMYES=true opam init && \
   OPAMYES=true opam depext google-drive-ocamlfuse && \
   OPAMYES=true opam install google-drive-ocamlfuse && \
   mv /root/.opam/system/bin/google-drive-ocamlfuse /bin/google-drive-ocamlfuse
