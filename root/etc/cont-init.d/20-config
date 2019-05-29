@@ -36,7 +36,7 @@ mount() {
 
 # make folders
 mkdir -p \
-	/config /downloads/{complete,incomplete} /watch
+	/config /downloads/complete /downloads/incomplete /watch
 
 # copy config
 [[ ! -f /config/settings.json ]] && cp \
