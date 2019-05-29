@@ -46,16 +46,10 @@ mkdir -p \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
 # permissions
-chown abc:abc \
-	/config/settings.json \
-	/config/blocklist-update.sh \
-	/downloads \
-	/downloads/complete \
-	/downloads/incomplete \
-	/watch
-
+chown -R abc:abc /config /downloads /watch
 chmod 755 /config/blocklist-update.sh
 
+# begin gdrive-ocamlfuse startup
 if [ -e "/config/.gdfuse/${LABEL}/config" ]; then
   echo "Notice: No Google Drive configuration found."
 else
