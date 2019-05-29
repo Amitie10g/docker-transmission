@@ -6,7 +6,6 @@ services:
     environment:
       - PUID=<PUID>
       - PGID=<PGID>
-      - BUCKET=<BUCKET>
       - TZ=UTC
       - TRANSMISSION_WEB_HOME=/combustion-release/
     volumes:
