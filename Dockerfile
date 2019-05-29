@@ -11,7 +11,7 @@ ENV LABEL="gdrive"
 
 RUN \
  echo "**** install packages ****" && \
- apk add --no-cache \
+ apk add --update --no-cache \
 	curl \
 	findutils \
 	fuse \
