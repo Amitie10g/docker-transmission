@@ -1,8 +1,4 @@
-FROM FROM ocaml/opam2:alpine AS builder
-RUN OPAMYES=true opam init && \
-  OPAMYES=true opam depext google-drive-ocamlfuse && \
-  OPAMYES=true opam install google-drive-ocamlfuse && \
-  mv /root/.opam/system/bin/google-drive-ocamlfuse /bin/google-drive-ocamlfuse
+FROM amitie10g/docker-gdrive AS builder
 
 # Base
 FROM lsiobase/alpine:3.9
@@ -57,7 +53,6 @@ RUN \
 # copy local files
 COPY root/ /
 COPY --from=builder /bin/google-drive-ocamlfuse /usr/bin/google-drive-ocamlfuse
-COPY --from=builder /init.sh /usr/bin/gdrive-init.sh
 
 # ports and volumes
 EXPOSE 9091 51413
