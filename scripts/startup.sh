@@ -3,6 +3,7 @@
 # Local Environment variables
 PUID=
 PGID=
+LOCAL_HOME=
 MOUNT_OPTS=
 CLIENT_ID=
 CLIENT_SECRET=
@@ -31,6 +32,7 @@ chmod 755 $BIN_PATH/docker-helper.sh
 {
 echo "PUID=\"$PUID\""
 echo "PGID=\"$PGID\""
+echo "LOCAL_HOME=\"$LOCAL_HOME\""
 echo "MOUNT_OPTS=\"$MOUNT_OPTS\""
 echo "CLIENT_ID=\"$CLIENT_ID\""
 echo "CLIENT_SECRET=\"$CLIENT_SECRET\""
