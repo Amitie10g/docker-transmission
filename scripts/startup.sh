@@ -3,12 +3,9 @@
 # Local Environment variables
 PUID=<User ID>
 PGID=<Group ID>
-BUCKET=<Bucket>
 CONF_PATH=<config path>
 WATCH_PATH=<watch path>
 BIN_PATH=<watch path>
-SERVICE_ACCOUNT=<service account name>
-PROJECT_ID=<project ID>
 CONTAINER_NAME="transmission"
 CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
 TZ="UTC"
@@ -33,7 +30,6 @@ chmod 755 $BIN_PATH/docker-helper.sh
 {
 echo "PUID=\"$PUID\""
 echo "PGID=\"$PGID\""
-echo "BUCKET=\"$BUCKET\""
 echo "TZ=\"$TZ\""
 echo "CONF_PATH=\"$CONF_PATH\""
 echo "WATCH_PATH=\"$WATCH_PATH\""
