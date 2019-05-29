@@ -1,4 +1,4 @@
-FROM amitie10g/docker-gdrive AS builder
+FROM amitie10g/gdrive AS builder
 
 # Base
 FROM lsiobase/alpine:3.9
