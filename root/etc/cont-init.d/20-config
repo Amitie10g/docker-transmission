@@ -10,7 +10,7 @@ DRIVE_PATH=/downloads/complete
 setup(){
   echo "Initialising google-drive-ocamlfuse..."
   echo "$VERIFICATION_CODE"
-  google-drive-ocamlfuse \
+  s6-setuidgid abc google-drive-ocamlfuse \
     -label "$LABEL" \
     -f \
     -cc \
@@ -23,7 +23,7 @@ setup(){
 
 mount() {
   echo "Mounting at $DRIVE_PATH..."
-  google-drive-ocamlfuse $DRIVE_PATH \
+  s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
     -o "noatime,uid=$PUID,gid=$PGID,allow_other" \
     -label "$LABEL" \
     -f \
@@ -56,7 +56,7 @@ chown abc:abc \
 
 chmod 755 /config/blocklist-update.sh
 
-if [ -e "$HOME/.gdfuse/${LABEL}/config" ]; then
+if [ -e "/config/.gdfuse/${LABEL}/config" ]; then
   echo "Notice: No Google Drive configuration found."
 else
   if [ -z "$CLIENT_ID" ]; then
