@@ -31,12 +31,11 @@ mount() {
     -skiptrash \
     -headless \
 
-
 }
 
 # make folders
 mkdir -p \
-	/downloads/{complete,incomplete} /watch
+	/config /downloads/{complete,incomplete} /watch
 
 # copy config
 [[ ! -f /config/settings.json ]] && cp \
