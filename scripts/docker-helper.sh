@@ -6,6 +6,12 @@ then
     CONF_PATH="$HOME/config"
 fi
 
+# Set default values for variables
+if [ -z $LOCAL_HOME ]
+then
+    LOCAL_HOME="/root"
+fi
+
 if [ -z $WATCH_PATH ]
 then
     WATCH_PATH="$HOME/watch"
@@ -86,6 +92,7 @@ case $1 in
             --name=$CONTAINER_NAME \
             -e PUID=$PUID \
             -e PGID=$PGID \
+	    -e LOCAL_HOME=$LOCAL_HOME \
             -e TZ=$TZ \
             -e CLIENT_ID=$CLIENT_ID \
 	    -e CLIENT_SECRET=$CLIENT_SECRET \
