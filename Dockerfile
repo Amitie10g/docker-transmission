@@ -1,11 +1,3 @@
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs"
-ENV DRIVE_PATH="/drive"
-ENV LABEL="gdrive"
-
-# Builder
 FROM FROM ocaml/opam2:alpine AS builder
 RUN OPAMYES=true opam init && \
   OPAMYES=true opam depext google-drive-ocamlfuse && \
@@ -14,6 +6,13 @@ RUN OPAMYES=true opam init && \
 
 # Base
 FROM lsiobase/alpine:3.9
+ARG BUILD_DATE
+ARG VERSION
+LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
+LABEL maintainer="sparklyballs"
+ENV DRIVE_PATH="/drive"
+ENV LABEL="gdrive"
+
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache \
