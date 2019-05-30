@@ -25,8 +25,9 @@ mkdir -p $CONF_PATH $WATCH_PATH $BIN_PATH
 chown -R $LOCAL_HOME
 
 # Install or update docker-helper.sh (optional)
-curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/Amitie10g/docker-transmission/gdrive-ocamlfuse/scripts/docker-helper.sh > $BIN_PATH/docker-helper.sh
-chmod 755 $BIN_PATH/docker-helper.sh
+curl -f "https://github.com/Amitie10g/docker-transmission/raw/gdrive-ocamlfuse/scripts/docker-helper.sh \
+-H 'Cache-Control: no-cache' -o $LOCAL_HOME/docker-helper.sh
+chmod 755 $LOCAL_HOME/docker-helper.sh
 
 # Save the variables to /etc/environment
 {
