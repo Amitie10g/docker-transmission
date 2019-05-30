@@ -86,7 +86,7 @@ case $1 in
             --name=$CONTAINER_NAME \
             -e PUID=$PUID \
             -e PGID=$PGID \
-	    -e LOCAL_HOME=$LOCAL_HOME \
+	    -e LOCAL_HOME=/config \
             -e TZ=$TZ \
             -e CLIENT_ID=$CLIENT_ID \
 	    -e CLIENT_SECRET=$CLIENT_SECRET \
