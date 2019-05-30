@@ -93,6 +93,7 @@ case $1 in
 	    -e VERIFICATION_CODE=$VERIFICATION_CODE \
 	    -e MOUNT_OPTS=$MOUNT_OPTS \
 	    -e REMOTE_DIR=$REMOTE_DIR \
+	    -e TEAMDRIVE=$TEAMDRIVE \
             -e TRANSMISSION_WEB_HOME=/combustion-release/ \
             -p 9091:9091 \
             -p 51413:51413 \
