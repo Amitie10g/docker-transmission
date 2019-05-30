@@ -12,6 +12,8 @@ services:
     volumes:
       - <path to data>:/config
       - <path to watch folder>:/watch
+      - <path to complete>:/downloads/complete
+      - <path to incomplete>:/downloads/incomplete
     ports:
       - 9091:9091
       - 51413:51413
