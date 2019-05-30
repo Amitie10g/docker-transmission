@@ -1,16 +1,17 @@
 #!/bin/bash
 
 # Local Environment variables
-PUID=<User ID>
-PGID=<Group ID>
-BUCKET=<Bucket>
-CONF_PATH=<config path>
-WATCH_PATH=<watch path>
-BIN_PATH=<watch path>
-SERVICE_ACCOUNT=<service account name>
-PROJECT_ID=<project ID>
+PUID= 
+PGID= 
+LOCAL_HOME= 
+BUCKET= 
+CONF_PATH= 
+WATCH_PATH= 
+BIN_PATH= 
+SERVICE_ACCOUNT=
+PROJECT_ID=
 CONTAINER_NAME="transmission"
-CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
+CONTAINER_IMAGE="amitie10g/transmission:latest"
 TZ="UTC"
 
 # Don't modify the following
@@ -34,6 +35,7 @@ chmod 755 $HOME/docker-helper.sh
 {
 echo "PUID=\"$PUID\""
 echo "PGID=\"$PGID\""
+echo "LOCAL_HOME=\"$LOCAL_HOME\""
 echo "BUCKET=\"$BUCKET\""
 echo "TZ=\"$TZ\""
 echo "CONF_PATH=\"$CONF_PATH\""
@@ -57,9 +59,9 @@ if [ -f "$CONF_PATH/gcs-key.json" ]; then
 	chown -R $PUID:$PGID $CONF_PATH/gcs-key.json
 	# Start the container using docker-helper. If you're using docker-compose or the
 	# Container deployment at Google Cloud, you may comment the following
-	docker-helper start
+	$HOME/docker-helper start
 	# Workarround for Container-optimized OS (comment above and uncomment bellow)
-	#bash $BIN_PATH/docker-helper.sh start
+	#bash $HOME/docker-helper.sh start
 else
 	ERROR="Please upload the Service Account Key to '\$HOME/config/gcs-key.json', then run 'docker-helper start'."
 	echo "$ERROR" >&2
