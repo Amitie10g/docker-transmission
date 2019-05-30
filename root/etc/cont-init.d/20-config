@@ -40,12 +40,13 @@ mkdir -p \
 [[ ! -f /config/settings.json ]] && cp \
 	/defaults/settings.json /config/settings.json
 
-[[ ! -f /config/.gdfuse/$LABEL/config ]] && cp \
-	/defaults/gdrive-config /config/.gdfuse/$LABEL/config
-
 # copy blocklist-update script
 [[ ! -f /config/blocklist-update.sh ]] && cp \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
+
+# copy settings for gdfuse
+[[ ! -f /config/.gdfuse/$LABEL/config ]] && cp \
+	/defaults/gdrive-config /config/.gdfuse/$LABEL/config
 
 # set the alterate root directory
 sed -i "s/^root_folder=$/root_folder=$REMOTE_DIR/g" /config/.gdfuse/$LABEL/config
