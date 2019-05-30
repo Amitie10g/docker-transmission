@@ -7,9 +7,11 @@ LOCAL_HOME=$(curl -fSs "http://metadata.google.internal/computeMetadata/v1/oslog
 
 CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
+COMPLETE_PATH=$LOCAL_HOME/downloads/complete
+INCOMPLETE_PATH=$LOCAL_HOME/downloads/incomplete
 
 # Create the directories
-mkdir -p $CONF_PATH $WATCH_PATH
+mkdir -p $CONF_PATH $WATCH_PATH $COMPLETE_PATH $INCOMPLETE_PATH
 chown -R $PUID:$PGID $LOCAL_HOME
 
 # Install or update docker-helper.sh (optional)
