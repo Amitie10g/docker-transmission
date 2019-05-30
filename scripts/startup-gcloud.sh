@@ -22,15 +22,3 @@ chmod 755 $LOCAL_HOME/docker-helper.sh
 curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/SETTINGS" \
 -H "Metadata-Flavor: Google" -o $CONF_PATH/settings.json
 chown $PUID:$PGID $CONF_PATH/settings.json
-
-# Download the Account service key from custom metadata
-curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/GCSKEY" \
--H "Metadata-Flavor: Google" -o $CONF_PATH/gcs-key.json
-
-# Check if the Service account key has been found
-if [ -f "$CONF_PATH/gcs-key.json" ]; then
-	chown $PUID:$PGID $CONF_PATH/gcs-key.json
-else
-	ERROR="Please set the custom metadata gcs-key or upload the key to the VM."
-	echo "$ERROR" >&2
-fi
