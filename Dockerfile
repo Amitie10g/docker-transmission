@@ -1,21 +1,29 @@
-FROM lsiobase/alpine:3.9
+FROM amitie10g/gdrive AS builder
 
-# set version label
+# Base
+FROM lsiobase/alpine:3.9
 ARG BUILD_DATE
 ARG VERSION
 LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
 LABEL maintainer="sparklyballs"
+ENV DRIVE_PATH="/drive"
+ENV LABEL="gdrive"
 
 RUN \
  echo "**** install packages ****" && \
- apk add --no-cache \
+ apk add --update --no-cache \
 	curl \
 	findutils \
+	fuse \
 	jq \
+	libressl2.7-libtls \
+	libgmpxx \
+	ncurses-libs \
 	openssl \
 	p7zip \
 	python \
 	rsync \
+	sqlite-libs \
 	tar \
 	transmission-cli \
 	transmission-daemon \
@@ -42,10 +50,10 @@ RUN \
  rm -rf \
 	/tmp/*
 
-
 # copy local files
 COPY root/ /
+COPY --from=builder /bin/google-drive-ocamlfuse /usr/bin/google-drive-ocamlfuse
 
 # ports and volumes
 EXPOSE 9091 51413
-VOLUME /config /downloads /watch
+VOLUME /config /watch

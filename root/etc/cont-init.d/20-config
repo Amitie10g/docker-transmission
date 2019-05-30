@@ -1,24 +1,70 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
-# make folders
+set -ex
+
+PUID=${PUID:-0}
+PGID=${PGID:-0}
+
+# Functions
+setup(){
+  echo "Initialising google-drive-ocamlfuse..."
+  echo "$VERIFICATION_CODE"
+  env HOME=/config s6-setuidgid abc google-drive-ocamlfuse \
+    -label "$LABEL" \
+    -f \
+    -cc \
+    -skiptrash \
+    -headless \
+    -id "$CLIENT_ID.apps.googleusercontent.com" \
+    -secret "$CLIENT_SECRET"
+
+}
+
+mount() {
+  echo "Mounting at $DRIVE_PATH..."
+  env HOME=/config s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
+    -o "noatime,uid=$PUID,gid=$PGID,allow_other" \
+    -label "$LABEL" \
+    -f \
+    -cc \
+    -skiptrash \
+    -headless
+
+}
+
+# make folders
 mkdir -p \
-	/downloads/{complete,incomplete} /watch
+	/config /downloads/complete /downloads/incomplete /watch
 
-# copy config
+# copy config
 [[ ! -f /config/settings.json ]] && cp \
 	/defaults/settings.json /config/settings.json
 
-# copy blocklist-update script
+# copy blocklist-update script
 [[ ! -f /config/blocklist-update.sh ]] && cp \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
-# permissions
-chown abc:abc \
-	/config/settings.json \
-	/config/blocklist-update.sh \
-	/downloads \
-	/downloads/complete \
-	/downloads/incomplete \
-	/watch
-
+# permissions
+chown -R abc:abc /config /downloads /watch
 chmod 755 /config/blocklist-update.sh
+
+# begin gdrive-ocamlfuse startup
+if [ -e "/config/.gdfuse/${LABEL}/config" ]; then
+  echo "Notice: No Google Drive configuration found."
+else
+  if [ -z "$CLIENT_ID" ]; then
+    echo "Fatal: no CLIENT_ID found -> EXIT"
+    exit 1
+  elif [ -z "$CLIENT_SECRET" ]; then
+    echo "Fatal: no CLIENT_SECRET found -> EXIT"
+    exit 1
+  elif [ -z "$VERIFICATION_CODE" ]; then
+    echo "Warning: no VERIFICATION_CODE found"
+    setup
+    exit 1
+  else
+    setup
+  fi
+fi
+
+mount
