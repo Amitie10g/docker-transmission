@@ -5,15 +5,11 @@ set -ex
 PUID=${PUID:-0}
 PGID=${PGID:-0}
 
-if [ -e "$LOCAL_HOME" ]; then
-    HOME=$LOCAL_HOME
-fi
-
 # Functions
 setup(){
   echo "Initialising google-drive-ocamlfuse..."
   echo "$VERIFICATION_CODE"
-  s6-setuidgid abc google-drive-ocamlfuse \
+  env HOME=/config s6-setuidgid abc google-drive-ocamlfuse \
     -label "$LABEL" \
     -f \
     -cc \
@@ -26,7 +22,7 @@ setup(){
 
 mount() {
   echo "Mounting at $DRIVE_PATH..."
-  s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
+  env HOME=/config s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
     -o "noatime,uid=$PUID,gid=$PGID,allow_other" \
     -label "$LABEL" \
     -f \
