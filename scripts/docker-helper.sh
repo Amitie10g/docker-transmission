@@ -19,7 +19,7 @@ fi
 
 if [ -z $CONTAINER_IMAGE ]
 then
-    CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
+    CONTAINER_IMAGE="amitie10g/transmission:gdrive"
 fi
 
 if [ -z $TZ ]
@@ -43,7 +43,7 @@ fi
 case $1 in
     build)
         if [ ! -d "docker-transmission" ]; then
-            git clone --branch gcsfuse https://github.com/Amitie10g/docker-transmission.git
+            git clone --branch gdrive-ocamlfuse https://github.com/Amitie10g/docker-transmission.git
         fi
         cd docker-transmission
         docker build \
