@@ -17,7 +17,6 @@ TZ="UTC"
 # Don't modify the following
 CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
-BIN_PATH=$LOCAL_HOME/bin
 
 # Uncomment if you have Linux 4.18 or above, as --privileged is not longer needed
 #PRIVILEGED=false
