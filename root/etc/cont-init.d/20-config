@@ -23,7 +23,7 @@ setup(){
 mount() {
   echo "Mounting at $DRIVE_PATH..."
   env HOME=/config s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
-    -o "noatime,uid=$PUID,gid=$PGID,allow_other" \
+    -o "noatime,uid=$PUID,gid=$PGID" \
     -label "$LABEL" \
     -f \
     -cc \
