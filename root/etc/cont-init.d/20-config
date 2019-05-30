@@ -48,8 +48,8 @@ mkdir -p \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
 # set the alterate root directory
-sed -i "s/^root_folder=$/root_folder=$REMOTE_DIR/g"
-sed -i "s/^team_drive_id=$/team_drive_id=$TEAMDRIVE/g"
+sed -i "s/^root_folder=$/root_folder=$REMOTE_DIR/g" /config/.gdfuse/$LABEL/config
+sed -i "s/^team_drive_id=$/team_drive_id=$TEAMDRIVE/g" /config/.gdfuse/$LABEL/config
 
 # permissions
 chown -R abc:abc /config /downloads /watch
