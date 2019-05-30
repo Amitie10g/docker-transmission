@@ -14,7 +14,7 @@ mkdir -p $CONF_PATH $WATCH_PATH
 chown -R $PUID:$PGID $LOCAL_HOME
 
 # Install or update docker-helper.sh (optional)
-curl -f "https://raw.githubusercontent.com/Amitie10g/docker-transmission/gcsfuse/scripts/docker-helper.sh > $LOCAL_HOME/docker-helper.sh" \
+curl -f "https://github.com/Amitie10g/docker-transmission/raw/gdrive-ocamlfuse/scripts/docker-helper.sh \
 -H 'Cache-Control: no-cache' -o $LOCAL_HOME/docker-helper.sh
 chmod 755 $LOCAL_HOME/docker-helper.sh
 
