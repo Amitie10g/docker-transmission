@@ -19,7 +19,7 @@ fi
 
 if [ -z $CONTAINER_IMAGE ]
 then
-    CONTAINER_IMAGE="amitie10g/docker-transmission:latest"
+    CONTAINER_IMAGE="amitie10g/transmission:gcsfuse"
 fi
 
 if [ -z $TZ ]
@@ -37,7 +37,7 @@ if [ "$PRIVILEGED" != false ]
 then
     PRIVILEGED="--privileged"
 else
-	PRIVILEGED=
+    PRIVILEGED=
 fi
 
 case $1 in
