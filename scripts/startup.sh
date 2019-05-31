@@ -14,8 +14,6 @@ TZ="UTC"
 # Don't modify the following
 CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
-COMPLETE_PATH=$LOCAL_HOME/downloads/complete
-INCOMPLETE_PATH=$LOCAL_HOME/downloads/incomplete
 
 # Uncomment if you have Linux 4.18 or above, as --privileged is not longer needed
 #PRIVILEGED=false
@@ -38,8 +36,6 @@ echo "BUCKET=\"$BUCKET\""
 echo "TZ=\"$TZ\""
 echo "CONF_PATH=\"$CONF_PATH\""
 echo "WATCH_PATH=\"$WATCH_PATH\""
-echo "COMPLETE_PATH=\"$COMPLETE_PATH\""
-echo "INCOMPLETE_PATH=\"$INCOMPLETE_PATH\""
 echo "CONTAINER_NAME=\"$CONTAINER_NAME\""
 echo "CONTAINER_IMAGE=\"$CONTAINER_IMAGE\""
 echo "PATH=\"$PATH:$BIN_PATH/bin\""
