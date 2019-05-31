@@ -26,10 +26,6 @@ chown -R $PUID:$PGID $LOCAL_HOME
 # Uncomment if you have Linux 4.18 or above, as --privileged is not longer needed
 #PRIVILEGED=false
 
-# Create the directories
-mkdir -p $CONF_PATH $WATCH_PATH
-chown -R $LOCAL_HOME
-
 # Install or update docker-helper.sh (optional)
 curl -f "https://github.com/Amitie10g/docker-transmission/raw/gdrive-ocamlfuse/scripts/docker-helper.sh \
 -H 'Cache-Control: no-cache' -o $LOCAL_HOME/docker-helper.sh
@@ -58,7 +54,7 @@ echo "PATH=\"$PATH:$BIN_PATH/bin\""
 awk '!a[$0]++' /etc/environment > /tmp/environment
 mv /tmp/environment /etc/environment
 
-# Uncomment if you want to download the key via gcloud, if available and already logged in
+# Uncomment if you want to download the key via gcloud, if available at the host side and already logged in
 #if [ ! -x "$(command -v gcloud)" ]; then
 #	gcloud iam service-accounts keys create $CONF_PATH/gcs-key.json \
 #	--iam-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
