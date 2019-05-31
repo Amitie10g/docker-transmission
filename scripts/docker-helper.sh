@@ -100,9 +100,9 @@ case $1 in
 	    -e REMOTE_DIR=$REMOTE_DIR \
 	    -e TEAMDRIVE=$TEAMDRIVE \
             -e TRANSMISSION_WEB_HOME=/combustion-release/ \
-	    -v <path to watch>:$WATCH_PATH
-	    -v <path to config>:CONFIG
-	    -v <path to incomplete>:$INCOMPLETE_PATH
+            -v $CONF_PATH:/config \
+            -v $WATCH_PATH:/watch \
+	    -v $INCOMPLETE_PATH:/downloads/incomplete \
             -p 9091:9091 \
             -p 51413:51413 \
             -p 51413:51413/udp \
