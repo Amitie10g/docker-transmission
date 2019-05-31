@@ -11,6 +11,11 @@ then
     WATCH_PATH="$HOME/watch"
 fi
 
+if [ -z $INCOMPLETE_PATH ]
+then
+    INCOMPLETE_PATH="$HOME/downloads/incomplete"
+fi
+
 if [ -z $CONTAINER_NAME ]
 then
     CONTAINER_NAME="transmission"
@@ -95,6 +100,9 @@ case $1 in
 	    -e REMOTE_DIR=$REMOTE_DIR \
 	    -e TEAMDRIVE=$TEAMDRIVE \
             -e TRANSMISSION_WEB_HOME=/combustion-release/ \
+	    -v <path to watch>:$WATCH_PATH
+	    -v <path to config>:CONFIG
+	    -v <path to incomplete>:$INCOMPLETE_PATH
             -p 9091:9091 \
             -p 51413:51413 \
             -p 51413:51413/udp \
