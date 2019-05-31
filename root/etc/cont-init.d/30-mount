@@ -36,8 +36,12 @@ else
     echo "Fatal: no CLIENT_SECRET found -> EXIT"
     exit 1
   elif [ -z "$VERIFICATION_CODE" ]; then
-    echo "Warning: no VERIFICATION_CODE found"
-    if [[ "$1" == 'setup' ]] && setup || exit 1
+    if  [[ $- == *i* ]]; then
+        setup
+    else
+        echo "Fatal: no VERIFICATION_CODE found"
+        echo "Run /etc/cont-init.d/30-setup from an interactive shell"
+        exit 1
   else
     setup
   fi
