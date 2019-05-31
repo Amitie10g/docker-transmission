@@ -18,7 +18,12 @@ curl -f "https://github.com/Amitie10g/docker-transmission/raw/gdrive-ocamlfuse/s
 -H 'Cache-Control: no-cache' -o $LOCAL_HOME/docker-helper.sh
 chmod 755 $LOCAL_HOME/docker-helper.sh
 
-# Download the Settings from custom metadata
+# Download the Transmission settings from custom metadata
 curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/SETTINGS" \
 -H "Metadata-Flavor: Google" -o $CONF_PATH/settings.json
 chown $PUID:$PGID $CONF_PATH/settings.json
+
+# Download the GDFUSE settingss from custom metadata
+curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/GDFUSE" \
+-H "Metadata-Flavor: Google" -o $CONF_PATH/.gdfuse/gdrive/config
+chown $PUID:$PGID $CONF_PATH/.gdfuse/gdrive/config
