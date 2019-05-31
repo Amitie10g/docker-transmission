@@ -56,7 +56,7 @@ chown -R abc:abc /config /downloads /watch
 chmod 755 /config/blocklist-update.sh
 
 # begin gdrive-ocamlfuse startup
-if [ -e "/config/.gdfuse/${LABEL}/config" ]; then
+if [ -e "/config/.gdfuse/$LABEL/config" ]; then
   echo "Notice: No Google Drive configuration found."
 else
   if [ -z "$CLIENT_ID" ]; then
