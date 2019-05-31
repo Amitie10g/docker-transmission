@@ -1,41 +1,13 @@
 #!/bin/bash
 
 # Set default values for variables
-if [ -z $CONF_PATH ]
-then
-    CONF_PATH="$HOME/config"
-fi
-
-if [ -z $WATCH_PATH ]
-then
-    WATCH_PATH="$HOME/watch"
-fi
-
-if [ -z $INCOMPLETE_PATH ]
-then
-    INCOMPLETE_PATH="$HOME/downloads/incomplete"
-fi
-
-if [ -z $CONTAINER_NAME ]
-then
-    CONTAINER_NAME="transmission"
-    #CONTAINER_NAME=$(docker -lq)
-fi
-
-if [ -z $CONTAINER_IMAGE ]
-then
-    CONTAINER_IMAGE="amitie10g/transmission:gdrive"
-fi
-
-if [ -z $TZ ]
-then
-      TZ="UTC"
-fi
-
-if [ -z $CONTAINER_SHELL ]
-then
-    CONTAINER_SHELL="/bin/bash"
-fi
+[ -z "$CONF_PATH" ] && CONF_PATH="$HOME/config"
+[ -z "$WATCH_PATH" ] && WATCH_PATH="$HOME/watch"
+[ -z "$INCOMPLETE_PATH" ] && INCOMPLETE_PATH="$HOME/downloads/incomplete"
+[ -z "$CONTAINER_NAME" ] &&  CONTAINER_NAME="transmission"
+[ -z "$CONTAINER_IMAGE" ] && CONTAINER_IMAGE="amitie10g/transmission:gdrive"
+[ -z "$TZ" ] &&  TZ="UTC"
+[ -z "$CONTAINER_SHELL" ] && CONTAINER_SHELL="/bin/bash"
 
 # If $PRIVILEGED is set to false, change to null
 if [ "$PRIVILEGED" != false ]
