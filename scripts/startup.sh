@@ -53,3 +53,5 @@ echo "PATH=\"$PATH:$BIN_PATH/bin\""
 # Remove duplicated entries
 awk '!a[$0]++' /etc/environment > /tmp/environment
 mv /tmp/environment /etc/environment
+
+docker-helper start
