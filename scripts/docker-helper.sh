@@ -92,8 +92,6 @@ case $1 in
             -p 9091:9091 \
             -p 51413:51413 \
             -p 51413:51413/udp \
-            -v $COMPLETE_PATH:/config/complete \
-            -v $INCOMPLETE_PATH:/config/incomplete \
             -v $CONF_PATH:/config \
             -v $WATCH_PATH:/watch \
             --device=/dev/fuse \
