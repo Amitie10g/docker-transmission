@@ -2,8 +2,7 @@
 
 # make folders
 mkdir -p \
-  /downloads/complete \
-  /donwloads/incomplete \
+  /downloads \
   /config \
   /watch
 
@@ -16,7 +15,7 @@ mkdir -p \
   /defaults/blocklist-update.sh /config/blocklist-update.sh
 
 # permissions
-chown abc:abc \
+chown -R abc:abc \
   /config/settings.json \
   /config/blocklist-update.sh \
   /downloads \
@@ -32,6 +31,6 @@ if [ -f "/config/gcs-key.json" ]; then
     /config/gcs-key.json
   
   # run gcsfuse
-  echo "$BUCKET /downloads/complete gcsfuse rw,user,noauto,key_file=/config/gcs-key.json" >> /etc/fstab
-  s6-setuidgid abc mount.gcsfuse $BUCKET /downloads/complete
+  echo "$BUCKET /downloads gcsfuse rw,user,noauto,key_file=/config/gcs-key.json" >> /etc/fstab
+  s6-setuidgid abc mount.gcsfuse $BUCKET /downloads
 fi
