@@ -17,6 +17,11 @@ TZ="UTC"
 # Don't modify the following
 CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
+INCOMPLETE_PATH=$LOCAL_HOME/downloads/incomplete
+
+# Create the directories
+mkdir -p $CONF_PATH $WATCH_PATH $INCOMPLETE_PATH
+chown -R $PUID:$PGID $LOCAL_HOME
 
 # Uncomment if you have Linux 4.18 or above, as --privileged is not longer needed
 #PRIVILEGED=false
