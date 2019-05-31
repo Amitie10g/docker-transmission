@@ -18,8 +18,3 @@ chown -R $PUID:$PGID $LOCAL_HOME
 curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/SETTINGS" \
 -H "Metadata-Flavor: Google" -o $CONF_PATH/settings.json
 chown $PUID:$PGID $CONF_PATH/settings.json
-
-# Download the GDFUSE settingss from custom metadata
-curl -f "http://metadata.google.internal/computeMetadata/v1/instance/attributes/GDFUSE" \
--H "Metadata-Flavor: Google" -o $CONF_PATH/.gdfuse/gdrive/config
-chown $PUID:$PGID $CONF_PATH/.gdfuse/gdrive/config
