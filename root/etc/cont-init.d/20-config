@@ -2,7 +2,8 @@
 
 # make folders
 mkdir -p \
-  /downloads \
+  /downloads/complete \
+  /downloads/incomplete \
   /config \
   /watch
 
@@ -31,6 +32,6 @@ if [ -f "/config/gcs-key.json" ]; then
     /config/gcs-key.json
   
   # run gcsfuse
-  echo "$BUCKET /downloads gcsfuse rw,user,noauto,key_file=/config/gcs-key.json" >> /etc/fstab
-  s6-setuidgid abc mount.gcsfuse $BUCKET /downloads
+  echo "$BUCKET /downloads/complete gcsfuse rw,user,noauto,key_file=/config/gcs-key.json" >> /etc/fstab
+  s6-setuidgid abc mount.gcsfuse $BUCKET /downloads/complete
 fi
