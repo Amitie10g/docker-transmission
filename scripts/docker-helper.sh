@@ -22,7 +22,7 @@ case $1 in
         if [ ! -d "docker-transmission" ]; then
             git clone --branch gdrive-ocamlfuse https://github.com/Amitie10g/docker-transmission.git
         fi
-        cd docker-transmission
+        cd docker-transmission || exit 1
         docker build \
         --no-cache \
         --pull \
@@ -60,21 +60,21 @@ case $1 in
 
     start)
         docker run -t -i -d \
-            --name=$CONTAINER_NAME \
-            -e PUID=$PUID \
-            -e PGID=$PGID \
+            --name="$CONTAINER_NAME" \
+            -e PUID="$PUID" \
+            -e PGID="$PGID" \
 	    -e LOCAL_HOME=/config \
-            -e TZ=$TZ \
-            -e CLIENT_ID=$CLIENT_ID \
-	    -e CLIENT_SECRET=$CLIENT_SECRET \
-	    -e VERIFICATION_CODE=$VERIFICATION_CODE \
-	    -e MOUNT_OPTS=$MOUNT_OPTS \
-	    -e REMOTE_DIR=$REMOTE_DIR \
-	    -e TEAMDRIVE=$TEAMDRIVE \
+            -e TZ="$TZ" \
+            -e CLIENT_ID="$CLIENT_ID" \
+	    -e CLIENT_SECRET="$CLIENT_SECRET" \
+	    -e VERIFICATION_CODE="$VERIFICATION_CODE" \
+	    -e MOUNT_OPTS="$MOUNT_OPTS" \
+	    -e REMOTE_DIR="$REMOTE_DIR" \
+	    -e TEAMDRIVE="$TEAMDRIVE" \
             -e TRANSMISSION_WEB_HOME=/combustion-release/ \
-            -v $CONF_PATH:/config \
-            -v $WATCH_PATH:/watch \
-	    -v $INCOMPLETE_PATH:/downloads/incomplete \
+            -v "$CONF_PATH":/config \
+            -v "$WATCH_PATH":/watch \
+	    -v "$INCOMPLETE_PATH":/downloads/incomplete \
             -p 9091:9091 \
             -p 51413:51413 \
             -p 51413:51413/udp \
