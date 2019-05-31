@@ -1,36 +1,12 @@
 #!/bin/bash
 
 # Set default values for variables
-if [ -z $CONF_PATH ]
-then
-    CONF_PATH="$HOME/config"
-fi
-
-if [ -z $WATCH_PATH ]
-then
-    WATCH_PATH="$HOME/watch"
-fi
-
-if [ -z $CONTAINER_NAME ]
-then
-    CONTAINER_NAME="transmission"
-    #CONTAINER_NAME=$(docker -lq)
-fi
-
-if [ -z $CONTAINER_IMAGE ]
-then
-    CONTAINER_IMAGE="amitie10g/transmission:gcsfuse"
-fi
-
-if [ -z $TZ ]
-then
-      TZ="UTC"
-fi
-
-if [ -z $CONTAINER_SHELL ]
-then
-    CONTAINER_SHELL="/bin/bash"
-fi
+[ -z "$CONF_PATH" ] && CONF_PATH="$HOME/config"
+[ -z "$WATCH_PATH" ] && WATCH_PATH="$HOME/watch"
+[ -z "$CONTAINER_NAME" ] &&  CONTAINER_NAME="transmission"
+[ -z "$CONTAINER_IMAGE" ] && CONTAINER_IMAGE="amitie10g/transmission:gdrive"
+[ -z "$TZ" ] &&  TZ="UTC"
+[ -z "$CONTAINER_SHELL" ] && CONTAINER_SHELL="/bin/bash"
 
 # If $PRIVILEGED is set to false, change to null
 if [ "$PRIVILEGED" != false ]
@@ -45,7 +21,7 @@ case $1 in
         if [ ! -d "docker-transmission" ]; then
             git clone --branch gcsfuse https://github.com/Amitie10g/docker-transmission.git
         fi
-        cd docker-transmission
+        cd docker-transmission || exit 1
         docker build \
         --no-cache \
         --pull \
@@ -83,17 +59,17 @@ case $1 in
 
     start)
         docker run -t -i -d \
-            --name=$CONTAINER_NAME \
-            -e PUID=$PUID \
-            -e PGID=$PGID \
-            -e TZ=$TZ \
-            -e BUCKET=$BUCKET \
+            --name="$CONTAINER_NAME" \
+            -e PUID="$PUID" \
+            -e PGID="$PGID" \
+            -e TZ="$TZ" \
+            -e BUCKET="$BUCKET" \
             -e TRANSMISSION_WEB_HOME=/combustion-release/ \
             -p 9091:9091 \
             -p 51413:51413 \
             -p 51413:51413/udp \
-            -v $CONF_PATH:/config \
-            -v $WATCH_PATH:/watch \
+            -v "$CONF_PATH":/config \
+            -v "$WATCH_PATH":/watch \
             --device=/dev/fuse \
             --restart unless-stopped \
             $PRIVILEGED \
