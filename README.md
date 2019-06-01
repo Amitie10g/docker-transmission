@@ -6,6 +6,8 @@ This branch is intended to add support for mounting [Google Cloud Storage](https
 * [lsiobase/alpine:3.9](https://hub.docker.com/r/lsiobase/alpine)
 * [golang:alpine](https://hub.docker.com/_/golang)
 
+**This is just a proof-of-concept for automatizing sharing process and storing completed torrents at Google Cloud Storage. Using the Google Cloud services without setting up properly would be expensive.**
+
 ## Differences between Master and gcsfuse branch
 
 * ``/downloads`` volume is not longer exposed. Instead,
