@@ -1,10 +1,16 @@
 This branch is intended to add support for mounting [Google Cloud Storage](https://cloud.google.com/storage) buckets via [gcsfuse](https://github.com/GoogleCloudPlatform/gcsfuse), using parts of the Dockerfile provided by [Ernest's docker-gcsfuse](https://github.com/chiaen/docker-gcsfuse). This is **NOT** for Google Drive. My [other branch](https://github.com/Amitie10g/docker-transmission/tree/gdrive-ocamlfuse) provides support for that.
 
-**Docker image:** [amitie10g/docker-transmission:gdrive](https://cloud.docker.com/u/amitie10g/repository/docker/amitie10g/docker-transmission).
+**Docker image:** [amitie10g/docker-transmission:gdrive](https://hub.docker.com/r/amitie10g/transmission).
+
+**Images used:**
+* [lsiobase/alpine:3.9](https://hub.docker.com/r/lsiobase/alpine)
+* [golang:alpine](https://hub.docker.com/_/golang)
 
 ## Differences between Master and gcsfuse branch
 
-* ``/download`` volume is not longer exposed. Instead, it is mounted via FUSE **inside** the container
+* ``/downloads`` volume is not longer exposed. Instead,
+  * ``/downloads/complete`` is mounted via FUSE **inside** the container.
+  * ``/downloads/incomplete`` is exposed to the host side, to keep the incomplete files and avoid unneccesary writes to bucket (wich is **expensive**)
 * The following files were modified:
   * ``Dockerfile``, to add instructions to build ``gcsfuse`` and ``mount.gcsfuse`` using the ``golang:alpine`` image.
   * ``root/etc/cont-init.d/20-config``, with instructions to update ``/etc/fstab`` and mounting the docker via ``mount.gcsfuse``
@@ -15,6 +21,9 @@ This branch is intended to add support for mounting [Google Cloud Storage](https
 * ``<config path>`` and ``<watch path>`` refers to the local direcctories you want to expose.
 
 * Get your [Service Account Key](https://cloud.google.com/iam/docs/creating-managing-service-account-keys) for your bucket, and upload to <config path>/gcsfuse-key.json. (if you're running the VM at Google Cloud, the key can be reteived as custom metadata).
+ 
+* The following directories should be created at the host-side:
+  * 
  
 * If you're running the VM at Google Cloud,
 
