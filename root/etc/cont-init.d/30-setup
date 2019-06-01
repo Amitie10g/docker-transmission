@@ -4,49 +4,59 @@ DRIVE_PATH=/downloads/complete
 
 # Functions
 setup(){
-  echo "Initialising google-drive-ocamlfuse..."
-  echo "$VERIFICATION_CODE"
-  env HOME=/config s6-setuidgid abc google-drive-ocamlfuse \
-    -label "$LABEL" \
-    -f \
-    -cc \
-    -skiptrash \
-    -headless \
-    -id "$CLIENT_ID.apps.googleusercontent.com" \
-    -secret "$CLIENT_SECRET"
-  mount
+	echo "Initialising google-drive-ocamlfuse..."
+	echo "$VERIFICATION_CODE"
+	env HOME=/config s6-setuidgid abc google-drive-ocamlfuse \
+		-label "$LABEL" \
+		-f \
+		-cc \
+		-skiptrash \
+		-headless \
+		-id "$CLIENT_ID.apps.googleusercontent.com" \
+		-secret "$CLIENT_SECRET"
+	mount
+  
+	echo "Making some cache, please wait a while..."
+	env HOME=/config s6-setuidgid abc ls /downloads/complete
+	echo " done."
 }
 
 mount() {
-  echo "Mounting at $DRIVE_PATH..."
-  env HOME=/config s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
-    -o "noatime,uid=$PUID,gid=$PGID" \
-    -label "$LABEL" \
-    -f \
-    -cc \
-    -skiptrash \
-    -headless
+	echo "Mounting at $DRIVE_PATH..."
+	env HOME=/config s6-setuidgid abc google-drive-ocamlfuse $DRIVE_PATH \
+		-o "noatime,uid=$PUID,gid=$PGID" \
+		-label "$LABEL" \
+		-f \
+		-cc \
+		-skiptrash \
+		-headless
 
 }
 
 # begin gdrive-ocamlfuse startup
 if [ -e "/config/.gdfuse/$LABEL/config" ]; then
-  echo "Notice: No Google Drive configuration found."
+	if [ "$1" == "--force" ]; then
+		setup
+	else
+		echo "Notice: existing google-drive-ocamlfuse config found."
+		exit 0
+	fi
 else
-  if [ -z "$CLIENT_ID" ]; then
-    echo "Fatal: no CLIENT_ID found -> EXIT"
-    exit 1
-  elif [ -z "$CLIENT_SECRET" ]; then
-    echo "Fatal: no CLIENT_SECRET found -> EXIT"
-    exit 1
-  elif [ -z "$VERIFICATION_CODE" ]; then
-    if [[ $1 == "--force" ]]; then
-      setup || exit 1
-    else
-      echo "Fatal: no VERIFICATION_CODE found.
-      Run '/etc/cont-init.d/30-setup --force' -> EXIT"
-      exit 1
-  else
-    setup
-  fi
+	if [ -z "$CLIENT_ID" ]; then
+		echo "Fatal: no CLIENT_ID found -> EXIT"
+		exit 1
+	elif [ -z "$CLIENT_SECRET" ]; then
+		echo "Fatal: no CLIENT_SECRET found -> EXIT"
+		exit 1
+	elif [ -z "$VERIFICATION_CODE" ]; then
+		if [[ $1 == "--force" ]]; then
+			setup
+		else
+			echo "Fatal: no VERIFICATION_CODE found.
+			Run '/etc/cont-init.d/30-setup --force' -> EXIT"
+			exit 1
+		fi
+	else
+		setup
+	fi
 fi
