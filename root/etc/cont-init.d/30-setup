@@ -1,3 +1,7 @@
+#!/bin/bash
+
+DRIVE_PATH=/downloads/complete
+
 # Functions
 setup(){
   echo "Initialising google-drive-ocamlfuse..."
