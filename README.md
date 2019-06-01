@@ -1,5 +1,3 @@
-# Work in progress!!!
-
 This branch is intended to add support for mounting [Google Cloud Storage](https://cloud.google.com/storage) buckets via [gcsfuse](https://github.com/GoogleCloudPlatform/gcsfuse), using parts of the Dockerfile provided by [Ernest's docker-gcsfuse](https://github.com/chiaen/docker-gcsfuse). This is **NOT** for Google Drive. My [other branch](https://github.com/Amitie10g/docker-transmission/tree/gdrive-ocamlfuse) provides support for that.
 
 **Docker image:** [amitie10g/docker-transmission:gdrive](https://cloud.docker.com/u/amitie10g/repository/docker/amitie10g/docker-transmission).
