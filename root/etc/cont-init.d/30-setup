@@ -46,6 +46,7 @@ else
         echo "Fatal: no VERIFICATION_CODE found"
         echo "Run /etc/cont-init.d/30-setup from an interactive shell"
         exit 1
+    fi
   else
     setup
   fi
