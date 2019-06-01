@@ -40,8 +40,12 @@ else
     echo "Fatal: no CLIENT_SECRET found -> EXIT"
     exit 1
   elif [ -z "$VERIFICATION_CODE" ]; then
-    echo "Warning: no VERIFICATION_CODE found"
-    [[ $- == *i* ]] && setup || timeout 30 setup
+    if [[ $1 == "--force" ]]; then
+      setup || exit 1
+    else
+      echo "Fatal: no VERIFICATION_CODE found.
+      Run '/etc/cont-init.d/30-setup --force' -> EXIT"
+      exit 1
   else
     setup
   fi
