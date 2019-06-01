@@ -32,5 +32,5 @@ if [ -f "/config/gcs-key.json" ]; then
   
   # run gcsfuse
   echo "$BUCKET /downloads/complete gcsfuse rw,user,noauto,key_file=/config/gcs-key.json" >> /etc/fstab
-  s6-setuidgid abc mount.gcsfuse $BUCKET /downloads/complete
+  s6-setuidgid abc mount.gcsfuse "$BUCKET" "/downloads/complete"
 fi
