@@ -9,7 +9,7 @@ CONF_PATH=$LOCAL_HOME/config
 WATCH_PATH=$LOCAL_HOME/watch
 
 # Create the directories
-mkdir -p $CONF_PATH $WATCH_PATH $COMPLETE_PATH $INCOMPLETE_PATH
+mkdir -p $CONF_PATH $WATCH_PATH
 chown -R $PUID:$PGID $LOCAL_HOME
 
 # Install or update docker-helper.sh (optional)
