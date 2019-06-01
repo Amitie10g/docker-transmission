@@ -20,10 +20,6 @@ mkdir -p \
 [[ ! -f /config/blocklist-update.sh ]] && cp \
 	/defaults/blocklist-update.sh /config/blocklist-update.sh
 
-# copy settings for gdfuse
-[[ ! -f /config/.gdfuse/$LABEL/config ]] && cp \
-	/defaults/gdrive-config /config/.gdfuse/$LABEL/config
-
 # permissions
 chown -R abc:abc /config /downloads /watch
 chmod 755 /config/blocklist-update.sh
