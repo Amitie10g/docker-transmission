@@ -14,7 +14,7 @@ setup(){
     -headless \
     -id "$CLIENT_ID.apps.googleusercontent.com" \
     -secret "$CLIENT_SECRET"
-
+  mount
 }
 
 mount() {
@@ -40,16 +40,9 @@ else
     echo "Fatal: no CLIENT_SECRET found -> EXIT"
     exit 1
   elif [ -z "$VERIFICATION_CODE" ]; then
-    if  [[ $- == *i* ]]; then
-        setup
-    else
-        echo "Fatal: no VERIFICATION_CODE found"
-        echo "Run /etc/cont-init.d/30-setup from an interactive shell"
-        exit 1
-    fi
+    echo "Warning: no VERIFICATION_CODE found"
+    [[ $- == *i* ]] && setup || timeout 30 setup
   else
     setup
   fi
 fi
-
-mount
