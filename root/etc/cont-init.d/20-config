@@ -26,7 +26,6 @@ chmod 755 /config/blocklist-update.sh
 
 # mount /download/complete to GCS bucket, if key files exists
 if [ -f "/config/gcs-key.json" ]; then
-
   # permissions
   chown abc:abc \
     /config/gcs-key.json
